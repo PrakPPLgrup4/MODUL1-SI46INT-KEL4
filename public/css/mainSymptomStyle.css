@@ -1,0 +1,92 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.symptom-box{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: repeat(2,auto);
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 100px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.symptom-card{
+  border: 0.5px;
+  border-color: black;
+  width: 325px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+}
+
+.card-content{
+  padding: 25px;
+}
+
+p{
+  margin-top: 10px;
+}
+
+.bothbutt{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.readMore{
+  text-decoration: none;
+  color: black;
+}
+
+.readmoreBtn{
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 20px;
+}
+
+.readMore:hover{
+  color: rgb(100, 100, 100);
+
+}
+
+.specialist{
+  padding: 2px 10px;
+  background-color: #71b856;
+  border: 1px #72b856c9;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease 0%;
+  color: black;
+  display: inline-block;
+  vertical-align: top;
+  color: white;
+  text-decoration: none;
+}
+
+.specialist:hover{
+  background-color: #3f66309d;
+}
+
+.specialistBtn{
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+}
+
+body{
+  background-image: url('../images/bgSymptom.png') ;
+}
+
+
+
+
+
