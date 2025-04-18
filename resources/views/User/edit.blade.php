@@ -31,10 +31,7 @@
       <label>Journal Text</label>
       <textarea name="journal_text" rows="5" required>{{ $journal->journal_text }}</textarea>
 
-      <div class="form-buttons">
-        <button type="submit" class='submit-btn'>Update</button>
-        <button type="button" class="cancel-btn" onclick="window.location='{{ route('views.journal') }}'">Cancel</button>
-      </div>
+      <button type="submit">Update</button>
     </form>
   </div>
 </body>

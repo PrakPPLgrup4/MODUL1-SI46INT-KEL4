@@ -21,7 +21,7 @@
 
     <form action="{{ route('journal.store') }}" method="POST">
       @csrf
-      <label>Title</label>
+      <label>Title (e.g. Day #4)</label>
       <input type="text" name="title" required>
 
       <label>Date</label>
@@ -30,10 +30,7 @@
       <label>Journal Text</label>
       <textarea name="journal_text" rows="5" required></textarea>
 
-      <div class="form-buttons">
-        <button type="submit" class='submit-btn'>Save</button>
-        <button type="button" class="cancel-btn" onclick="window.location='{{ route('views.journal') }}'">Cancel</button>
-      </div>
+      <button type="submit">Save</button>
     </form>
   </div>
 </body>
