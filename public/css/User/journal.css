@@ -265,7 +265,7 @@ header {
 .form-container button {
   margin-top: 2rem;
   width: 100%;
-  background-color: #84BD00;
+  /* background-color: #84BD00; */
   color: white;
   padding: 0.75rem;
   font-size: 1rem;
@@ -276,9 +276,9 @@ header {
   transition: background-color 0.3s ease;
 }
 
-.form-container button:hover {
+/* .form-container button:hover {
   background-color: #6aa800;
-}
+} */
 
 
 .error {
@@ -311,13 +311,13 @@ header {
 
 .edit-btn {
   background-color: #ffd600;
-  color: #000;
+  color: #ffffff;
   border: none;
 }
 
 .delete-btn {
   background-color: #ff4d4d;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
 }
@@ -328,4 +328,36 @@ header {
 
 .edit-btn:hover {
   background-color: #e6c200;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cancel-btn {
+  padding: 10px 20px;
+  background-color: #e74c3c; 
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 30px;
+}
+
+.cancel-btn:hover {
+  background-color: #c0392b; /* merah leb gelap saat hover */
+}
+
+.submit-btn{
+  background-color: #6aa800;
+}
+
+.submit-btn:hover{
+  background-color: #4f7b04;
 }

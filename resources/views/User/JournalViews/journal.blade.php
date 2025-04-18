@@ -43,7 +43,7 @@
             
             <div class="journal-footer">
                 <div class="journal-date">
-                    {{ \Carbon\Carbon::parse($journal->date)->format('d M') }}
+                    {{ \Carbon\Carbon::parse($journal->date)->format('d M Y') }}
                 </div>
                 <div class="journal-actions">
                     <a href="{{ route('journal.edit', $journal->id) }}" class="edit-btn">Edit</a>
