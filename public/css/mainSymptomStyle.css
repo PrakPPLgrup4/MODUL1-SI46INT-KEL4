@@ -28,6 +28,12 @@
   margin: 20px;
 }
 
+
+.symptom-card:hover{
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.473);
+}
+
+
 .card-content{
   padding: 25px;
 }
@@ -83,7 +89,9 @@ p{
 }
 
 body{
-  background-image: url("../bg/bgSymptom.png") ;
+
+  background-image: url('../images/bgSymptom.png') ;
+
 }
 
 
