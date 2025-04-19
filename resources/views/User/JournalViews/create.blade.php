@@ -30,7 +30,10 @@
       <label>Journal Text</label>
       <textarea name="journal_text" rows="5" required></textarea>
 
-      <button type="submit">Save</button>
+      <div class="form-buttons">
+        <button class="submit" type="submit">Save</button>
+        <button type="button" class="cancel-btn" onclick="window.location='{{ route('views.journal') }}'">Cancel</button>
+      </div>
     </form>
   </div>
 </body>

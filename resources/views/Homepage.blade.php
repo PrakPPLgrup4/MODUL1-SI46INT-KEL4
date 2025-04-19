@@ -15,7 +15,7 @@
       <img class="logo" src="images/logo.png" alt="logo">
       <nav>
         <ul class="nav_links">
-          <li><a href="#">Journal</a></li>
+          <li><a href="{{ route('views.journal') }}">Journal</a></li>
           <li><a href="#">Appointment</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Chat</a></li>
@@ -75,7 +75,7 @@
           </div>
 
           <div class="pentool_button">
-            <a href="#">Start journaling</a>
+            <a href="{{ route('views.journal') }}">Start journaling</a>
           </div>  
         </div>
     </div>

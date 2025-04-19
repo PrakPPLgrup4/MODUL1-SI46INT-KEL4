@@ -12,11 +12,13 @@
   </head>
   <body>
     <header>
-      <img class="logo" src="images/logo.png" alt="logo">
+      <a href="{{ route('views.Homepage') }}">
+        <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+      </a>
       <nav>
         <ul class="nav_links">
           
-          <li><a style="color:#FFDB99" href="#">Journal</a></li>
+          <li><a style="color:#FFDB99" href="views.journal">Journal</a></li>
           <li><a href="#">Appointment</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Chat</a></li>
@@ -27,6 +29,11 @@
     
     <div class="container">
       <h1>Journal</h1>
+
+      <form method="GET" action="{{ route('views.journal') }}" class="search-bar">
+        <input type="text" name="search" placeholder="Search your journal..." value="{{ request('search') }}">
+        <button type="submit">Search</button>
+      </form>
 
       @foreach ($journals as $index => $journal)
         <div class="journal-card {{ $index == 0 ? '' : '' }}">
@@ -43,7 +50,7 @@
             
             <div class="journal-footer">
                 <div class="journal-date">
-                    {{ \Carbon\Carbon::parse($journal->date)->format('d M') }}
+                    {{ \Carbon\Carbon::parse($journal->date)->format('d M Y') }}
                 </div>
                 <div class="journal-actions">
                     <a href="{{ route('journal.edit', $journal->id) }}" class="edit-btn">Edit</a>

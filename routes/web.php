@@ -29,5 +29,7 @@ Route::get('/journal/{id}/edit', [JournalController::class, 'edit'])->name('jour
 Route::put('/journal/{id}', [JournalController::class, 'update'])->name('journal.update');
 Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
 
+
+
 //psychiatry
 route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci');
