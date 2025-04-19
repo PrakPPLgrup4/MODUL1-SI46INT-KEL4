@@ -2,26 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Psylography')</title>
+    <title>Psylography</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{-- CSS --}}
-    <link rel="stylesheet" href="{{ asset('css/navStyle.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mainSymptomStyle.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,500&display=swap" rel="stylesheet">
+    {{-- Bootstrap CSS --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {{-- Optional Custom Styling --}}
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+
+        .btn-green {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-
-    {{-- Navbar --}}
-    @include('partials.navbar')
-
-    {{-- Page content --}}
-    <main>
+    <div class="container">
         @yield('content')
-    </main>
+    </div>
 
-    {{-- JS --}}
-    <script src="{{ asset('js/navIndex.js') }}" defer></script>
-
+    {{-- Bootstrap JS (Optional if you need modals, alerts, etc.) --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
