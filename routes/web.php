@@ -16,10 +16,12 @@ Route::get('/symptom', function () {
     return view('symptom'); //ini gw masih bingung routing - / awal tuh buat yg di akses dari webnya - controller itu kau harus buat untuk setiap views yg ada - name tuh buat ngebalikin halaman mana yg mau di tampilin
 })->name('views.symptom');
 
+
 //symptom content
 Route::get('/symptomcontent1', function(){
     return view('symptomcontent1');
 })->name('view.symptomcontent1');
+
 
 //journal
 // Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');

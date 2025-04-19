@@ -44,7 +44,9 @@
             </p>
 
             <div class="see_more">
+
                  <a href="/symptom">See more ></a>
+
             </div>
         </div>
       </div>

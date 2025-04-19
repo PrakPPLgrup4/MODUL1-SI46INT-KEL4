@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="{{ asset('css/mainSymptomStyle.css') }}">
 </head>
 <body>
+
 @extends('layouts.app')
 
 @section('content')
+
     <div id="navbar"></div>
     <div class="symptom-box">
       <div class="symptom-card">
@@ -21,7 +23,9 @@
               <a class="specialist" href="#">Find Specialist</a>
             </div>
             <div class="readmoreBtn">
+
               <a class="readMore" href="/symptomcontent1">Learn more</a>
+
             </div>
 
           </div>  
@@ -114,7 +118,9 @@
       </div>
 
     </div>
+
 @endsection
+
 
     <script src="{{ asset('js/index.js') }}"></script>
 </body>
