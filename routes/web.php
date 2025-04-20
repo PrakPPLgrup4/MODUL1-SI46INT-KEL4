@@ -7,6 +7,8 @@ use App\Http\Controllers\JournalController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PsychController;
+use App\Http\Controllers\SymptomController;
+use App\Http\Controllers\AdminController;
 
 
 // Landing Page
@@ -25,9 +27,12 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 // Homepage (after user login)
 Route::get('/home', [HomeController::class, 'home'])->name('views.Homepage');
 
+//admin routes
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
 // Symptom routes
-Route::get('/symptom', fn() => view('symptom'))->name('views.symptom');
-Route::get('/symptomcontent1', fn() => view('symptomcontent1'))->name('view.symptomcontent1');
+Route::get('/symptom', [SymptomController::class, 'index'])->name('views.symptom');
+Route::get('/symptomcontent1', [SymptomController::class, 'showContent1'])->name('views.symptomcontent1');
 
 // Journal routes
 Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');

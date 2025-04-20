@@ -12,7 +12,7 @@ class PsychController extends Controller
     public function index()
     {
         $psychs = Psych::all();
-        return view('User.psych', compact('psychs'));
+        return view('User.PsychiatristViews.psych', compact('psychs'));
     }
 }
 
