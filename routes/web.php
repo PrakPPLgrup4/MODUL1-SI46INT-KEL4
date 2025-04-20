@@ -4,31 +4,37 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PsyciController;
 use App\Http\Controllers\JournalController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\PsychController;
+use App\Http\Controllers\SymptomController;
+use App\Http\Controllers\AdminController;
 
+
+// Landing Page
 Route::get('/', function () {
-    return view('landing');})->name('views.landing');
+    return view('landing');
+})->name('views.landing');
 
-//homepage
-route::get('/home', [HomeController::class, 'home'])->name('views.Homepage');
+// Login & Register
+Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-//symmptom
-Route::get('/symptom', function () {
-    return view('symptom'); //ini gw masih bingung routing - / awal tuh buat yg di akses dari webnya - controller itu kau harus buat untuk setiap views yg ada - name tuh buat ngebalikin halaman mana yg mau di tampilin
-})->name('views.symptom');
+Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
+// Homepage (after user login)
+Route::get('/home', [HomeController::class, 'home'])->name('views.Homepage');
 
-//symptom content
-Route::get('/symptomcontent1', function(){
-    return view('symptomcontent1');
-})->name('view.symptomcontent1');
+//admin routes
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
+// Symptom routes
+Route::get('/symptom', [SymptomController::class, 'index'])->name('views.symptom');
+Route::get('/symptomcontent1', [SymptomController::class, 'showContent1'])->name('views.symptomcontent1');
 
-//journal
-// Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');
-// Route::get('/journal/create', [JournalController::class, 'create'])->name('User.create');
-// Route::post('/journal', [JournalController::class, 'store'])->name('journal.store');
-
-//journall
+// Journal routes
 Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');
 Route::get('/journal/create', [JournalController::class, 'create'])->name('User.create');
 Route::post('/journal', [JournalController::class, 'store'])->name('journal.store');
@@ -36,5 +42,8 @@ Route::get('/journal/{id}/edit', [JournalController::class, 'edit'])->name('jour
 Route::put('/journal/{id}', [JournalController::class, 'update'])->name('journal.update');
 Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
 
-//psychiatry
-route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci');
+// Psychiatrist page
+Route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci');
+
+// Psychiatrist profile page
+Route::get('/psych', [PsychController::class, 'index'])->name('views.psych');
