@@ -9,7 +9,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PsychController;
 use App\Http\Controllers\SymptomController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\AppointmentController;
 
 // Landing Page
 Route::get('/', function () {
@@ -47,3 +47,6 @@ Route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci');
 
 // Psychiatrist profile page
 Route::get('/psych', [PsychController::class, 'index'])->name('views.psych');
+
+// Appointment Routes
+Route::get('/appointment', [AppointmentController::class, 'index'])->name('views.appointment');
