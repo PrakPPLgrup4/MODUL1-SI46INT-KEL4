@@ -12,7 +12,7 @@
   <header>
     <img class="logo" src="{{ asset('images/logo.png') }}" alt="Psylography Logo">
 
-    <a href="{{ route('views.Homepage') }}"> <!-- harus diubah -->
+    <a href="{{ route('views.Homepage') }}"> <!-- Update with the correct route for logout -->
         <img class="logo" src="{{ asset('images/logout.png') }}" alt="logout">
     </a>
   </header>
@@ -21,8 +21,8 @@
     <aside class="sidebar">
       <ul>
         <li><a href="#">User Account</a></li>
-        <li><a href="#">Psychiatric Profile</a></li>
-        <li><a href="#">Symptomps</a></li>
+        <li><a href="{{ route('admin.psychs') }}">Psychiatric Profile</a></li>
+        <li><a href="#">Symptoms</a></li>
       </ul>
     </aside>
 

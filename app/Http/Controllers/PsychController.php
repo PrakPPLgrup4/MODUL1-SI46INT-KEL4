@@ -11,9 +11,10 @@ class PsychController extends Controller
 {
     public function index()
     {
-        $psychs = Psych::all();
+        $psychs = Psych::all();  // Retrieves all psychiatrists from the database
         return view('User.PsychiatristViews.psych', compact('psychs'));
     }
+
 }
 
 
