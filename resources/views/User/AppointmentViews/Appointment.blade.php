@@ -18,7 +18,7 @@
       <nav>
         <ul class="nav_links">
           
-          <li><a href="views.appointment">Journal</a></li>
+          <li><a>Journal</a></li>
           <li><a style="color:#FFDB99" href="views.appointment">Appointment</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Chat</a></li>
