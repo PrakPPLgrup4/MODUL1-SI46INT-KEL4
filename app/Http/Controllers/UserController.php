@@ -11,7 +11,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('user.UserProfileViews.index'); // ini liat view
     }
 
     /**
@@ -41,9 +41,9 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        //
+        return view('user.UserProfileViews.edit');
     }
 
     /**
@@ -51,7 +51,15 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'username' => 'required',
+            'gender' => 'required',
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+        ]);
+
+        return redirect()->route('user.profile.edit')->with('success', 'Profile updated successfully.');
     }
 
     /**
