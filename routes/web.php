@@ -50,3 +50,12 @@ Route::get('/psych', [PsychController::class, 'index'])->name('views.psych');
 
 // Appointment Routes
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('views.appointment');
+
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
+    Route::get('psychs', [AdminController::class, 'index'])->name('psychs');
+    Route::get('psychs/create', [AdminController::class, 'create'])->name('create');
+    Route::post('psychs', [AdminController::class, 'store'])->name('store');
+    Route::get('psychs/{id}/edit', [AdminController::class, 'edit'])->name('edit');
+    Route::put('psychs/{id}', [AdminController::class, 'update'])->name('psychs.update');  // Add this line
+    Route::delete('psychs/{id}', [AdminController::class, 'destroy'])->name('destroy');
+});
