@@ -1,0 +1,16 @@
+h1{
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 40px;
+  margin-top: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+#para{        
+  margin: 0 400px 20px 400px;
+  text-align: justify;
+  font-size: 20px;
+}
+
+#para p{
+  margin-bottom: 20px;
+}
