@@ -11,6 +11,7 @@ use App\Http\Controllers\SymptomController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserController;
 
 // Landing Page
 Route::get('/', function () {
@@ -62,10 +63,10 @@ Route::get('/psych', [PsychController::class, 'index'])->name('views.psych');
 // Appointment routes
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('views.appointment');
 
-// User Profile Page
-Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user.profile');
-Route::get('/user-profile/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');
-Route::post('/user-profile/update', [UserProfileController::class, 'update'])->name('user.profile.update');
-
 // ✅ Rating route for psychiatrists
 Route::post('/rate-psych', [PsychController::class, 'rate'])->name('psych.rate');
+
+// User Profile Page
+Route::get('/user-profile', [UserController::class, 'index'])->name('user.profile');
+Route::get('/user-profile/edit', [UserController::class, 'edit'])->name('user.profile.edit');
+Route::post('/user-profile/update', [UserController::class, 'update'])->name('user.profile.update');
