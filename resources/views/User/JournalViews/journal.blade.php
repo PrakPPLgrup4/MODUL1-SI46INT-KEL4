@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>Journal</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('css/User/journal.css') }}">
@@ -17,14 +16,13 @@
       </a>
       <nav>
         <ul class="nav_links">
-          
-          <li><a style="color:#FFDB99" href="views.journal">Journal</a></li>
+          <li><a style="color:#FFDB99" href="{{ route('views.journal') }}">Journal</a></li>
           <li><a href="#">Appointment</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Chat</a></li>
         </ul>
       </nav>
-    <img style="width:50px; margin-left:15px;" src="images/profile.png" alt="profile">
+      <img style="width:50px; margin-left:15px;" src="{{ asset('images/profile.png') }}" alt="profile">
     </header>
     
     <div class="container">
@@ -35,70 +33,40 @@
         <button type="submit">Search</button>
       </form>
 
+      @if($journals->isEmpty() && request('search'))
+        <script>
+          alert("No journal entries found for '{{ request('search') }}'.");
+        </script>
+      @endif
+
       @foreach ($journals as $index => $journal)
-        <div class="journal-card {{ $index == 0 ? '' : '' }}">
-            
-            <div class="journal-card-header">
-                <h2>{{ $journal->title }}</h2>
-                <div class="user-icon">
-                    <img src="{{ asset('images/profile.png') }}" alt="User Icon">
-                </div>
+        <div class="journal-card">
+          <div class="journal-card-header">
+            <h2>{{ $journal->title }}</h2>
+            <div class="user-icon">
+              <img src="{{ asset('images/profile.png') }}" alt="User Icon">
             </div>
+          </div>
 
-            <p>{{ Str::limit($journal->journal_text, 200) }}</p>
+          <p>{{ Str::limit($journal->journal_text, 200) }}</p>
 
-            
-            <div class="journal-footer">
-                <div class="journal-date">
-                    {{ \Carbon\Carbon::parse($journal->date)->format('d M Y') }}
-                </div>
-                <div class="journal-actions">
-                    <a href="{{ route('journal.edit', $journal->id) }}" class="edit-btn">Edit</a>
-                    <form action="{{ route('journal.destroy', $journal->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="delete-btn">Delete</button>
-                    </form>
-                </div>
+          <div class="journal-footer">
+            <div class="journal-date">
+              {{ \Carbon\Carbon::parse($journal->date)->format('d M Y') }}
             </div>
+            <div class="journal-actions">
+              <a href="{{ route('journal.edit', $journal->id) }}" class="edit-btn">Edit</a>
+              <form action="{{ route('journal.destroy', $journal->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+            </div>
+          </div>
         </div>
       @endforeach
 
       <a href="{{ route('User.create') }}" class="floating-plus-btn">+</a>
     </div>
-
-
-    <!-- <footer>
-      <div class="footer_bg">
-        <img src="images/PSYLO GRAPHY.png">
-        <div class="footer_text">
-            <div class="book_footer">
-                <h1>Consult Now</h1>
-                <hr>
-                <div class="footer_opt">
-                    <a href="{{ url('appointments') }}">Chat With Psychiatrist</a>
-                </div>
-            </div>
-            <div class="discover_footer">
-                <h1>Discover Us</h1>
-                <hr>
-                <div class="footer_opt">
-                    <a href="#about_us">About Us</a>
-                    <a href="{{ url('doctors') }}" >Our Psychiatrist</a>
-                </div>
-            </div>
-            <div class="contact_footer">
-                <h1>Contact Us</h1>
-                <hr>
-                <div class="footer_opt">
-                  <a href="tel:1500115">14022</a>
-                  <a href="mailto:cs@telkomedika.co.id">cs@psylo.co.id</a>
-                </div>
-            </div>
-        </div>
-      </div>
-
-      <div class="line"></div>
-    </footer> -->
   </body>
 </html>

@@ -35,12 +35,21 @@ Route::get('/symptom', [SymptomController::class, 'index'])->name('views.symptom
 Route::get('/symptomcontent1', [SymptomController::class, 'showContent1'])->name('views.symptomcontent1');
 
 // Journal routes
-Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');
-Route::get('/journal/create', [JournalController::class, 'create'])->name('User.create');
-Route::post('/journal', [JournalController::class, 'store'])->name('journal.store');
-Route::get('/journal/{id}/edit', [JournalController::class, 'edit'])->name('journal.edit');
-Route::put('/journal/{id}', [JournalController::class, 'update'])->name('journal.update');
-Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
+#Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');
+#Route::get('/journal/create', [JournalController::class, 'create'])->name('User.create');
+#Route::post('/journal', [JournalController::class, 'store'])->name('journal.store');
+#Route::get('/journal/{id}/edit', [JournalController::class, 'edit'])->name('journal.edit');
+#Route::put('/journal/{id}', [JournalController::class, 'update'])->name('journal.update');
+#Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
+
+Route::prefix('home')->group(function () {
+    Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');
+    Route::get('/journal/create', [JournalController::class, 'create'])->name('User.create');
+    Route::post('/journal', [JournalController::class, 'store'])->name('journal.store');
+    Route::get('/journal/{id}/edit', [JournalController::class, 'edit'])->name('journal.edit');
+    Route::put('/journal/{id}', [JournalController::class, 'update'])->name('journal.update');
+    Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
+});
 
 // Psychiatrist page
 Route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci');
