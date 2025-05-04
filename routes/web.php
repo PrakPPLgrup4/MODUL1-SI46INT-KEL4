@@ -10,6 +10,7 @@ use App\Http\Controllers\PsychController;
 use App\Http\Controllers\SymptomController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\UserController;
 
 // Landing Page
 Route::get('/', function () {
@@ -60,8 +61,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::delete('psychs/{id}', [AdminController::class, 'destroy'])->name('destroy');
 });
 
-// User Profile Pagee
-Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user.profile');
-Route::get('/user-profile/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');
-Route::post('/user-profile/update', [UserProfileController::class, 'update'])->name('user.profile.update');
-
+// User Profile Page
+Route::get('/user-profile', [UserController::class, 'index'])->name('user.profile');
+Route::get('/user-profile/edit', [UserController::class, 'edit'])->name('user.profile.edit');
+Route::post('/user-profile/update', [UserController::class, 'update'])->name('user.profile.update');
