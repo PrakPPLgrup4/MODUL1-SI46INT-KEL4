@@ -12,18 +12,28 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
+      table-layout: fixed;
     }
 
     table, th, td {
       border: 1px solid #ddd;
       padding: 10px;
       text-align: left;
-      word-wrap: break-word; /* Ensure text breaks inside columns */
     }
 
     th {
       background-color: #f4f4f4;
       font-weight: bold;
+    }
+
+    td {
+      vertical-align: top;
+      word-break: break-word;
+    }
+
+    td.description-column {
+      max-width: 300px;
+      white-space: pre-wrap;
     }
 
     td img {
@@ -40,25 +50,36 @@
       text-decoration: none;
       color: white;
       font-weight: bold;
+      border: none;
+      cursor: pointer;
     }
 
     .btn:hover {
       opacity: 0.8;
     }
 
+    /* Make the "+" button square */
     .btn-create {
       background-color: #4CAF50;
-      position: fixed;
-      left: 250px; /* Adjust based on the sidebar width */
-      top: 100px;
+      margin-top: 20px;
+      display: block;
+      width: 50px; /* Adjust width */
+      height: 50px; /* Adjust height to make it square */
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 50px; /* Center the "+" symbol vertically */
+      font-size: 24px; /* Adjust font size */
+      border-radius: 10px; /* Optional: Adjust to make button rounded */
     }
 
     .btn-edit {
       background-color: #FFC107; /* Yellow */
+      color: black;
     }
 
     .btn-delete {
-      background-color: #F44336; /* Red */
+      background-color: red; /* Red for delete button */
+      color: white;
     }
 
     .alert-success {
@@ -86,6 +107,13 @@
       td img {
         width: 80px;
       }
+    }
+
+    /* Centered Title */
+    .center-title {
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
     }
   </style>
 
@@ -119,7 +147,8 @@
     </aside>
 
     <main class="main-content">
-      <h2 style="text-align: center; margin-top: 20px;">Manage Psychiatrist Profiles</h2>
+      <!-- Create Profile Button -->
+      <a href="{{ route('admin.create') }}" class="btn btn-create">+</a>
 
       <!-- Display Success Message -->
       @if(session('success'))
@@ -127,9 +156,6 @@
           {{ session('success') }}
         </div>
       @endif
-
-      <!-- Create Profile Button -->
-      <a href="{{ route('admin.create') }}" class="btn btn-create">+ Create New Profile</a>
 
       <!-- Psychiatrist Table -->
       <table>
@@ -146,7 +172,7 @@
           @foreach($psychs as $psych)
             <tr>
               <td>{{ $psych->full_name }}</td>
-              <td>{{ $psych->description }}</td>
+              <td class="description-column">{{ $psych->description }}</td>
               <td><img src="{{ asset('storage/' . $psych->picture) }}" alt="{{ $psych->full_name }}"></td>
               <td>{{ number_format($psych->average_rating, 1) }}</td>
               <td>
