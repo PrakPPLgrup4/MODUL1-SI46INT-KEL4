@@ -59,3 +59,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function() {
     Route::put('psychs/{id}', [AdminController::class, 'update'])->name('psychs.update');  // Add this line
     Route::delete('psychs/{id}', [AdminController::class, 'destroy'])->name('destroy');
 });
+
+// User Profile Pagee
+Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user.profile');
+Route::get('/user-profile/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');
+Route::post('/user-profile/update', [UserProfileController::class, 'update'])->name('user.profile.update');
+
