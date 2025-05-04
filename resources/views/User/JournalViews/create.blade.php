@@ -21,7 +21,7 @@
 
     <form action="{{ route('journal.store') }}" method="POST">
       @csrf
-      <label>Title (e.g. Day #4)</label>
+      <label>Title</label>
       <input type="text" name="title" required>
 
       <label>Date</label>
