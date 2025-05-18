@@ -15,7 +15,7 @@
       <img class="logo" src="images/logo.png" alt="logo">
       <nav>
         <ul class="nav_links">
-          <li><a href="#">Journal</a></li>
+          <li><a href="{{ route('views.journal') }}">Journal</a></li>
           <li><a href="#">Appointment</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="#">Chat</a></li>
@@ -26,7 +26,6 @@
     
     <script src="navIndex.js" async defer></script>
 
-    
     <div class="hero">
       <div class="hero_content">
         <h1>Explore General Counseling Topics</h1>
@@ -56,7 +55,6 @@
       </div>
     </div>
     
-    
     <div class="pentool">
 
       <div class="pentool_index">
@@ -77,7 +75,7 @@
           </div>
 
           <div class="pentool_button">
-            <a href="#">Start journaling</a>
+            <a href="{{ route('views.journal') }}">Start journaling</a>
           </div>  
         </div>
     </div>
@@ -156,10 +154,9 @@
         </div>
       </div>
         <div class="psy_button">
-          <a href="#">See All Our Psychiatrist</a>
+          <a href="{{ route('views.psych') }}">See All Our Psychiatrist</a>
         </div> 
     </div>
-
 
     <div class= "news">
       <h1>Read about mental health</h1>
@@ -173,7 +170,6 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla par</p>
           </div>
         </div>
-
 
         <div class= "news_content">
           <img src="images/news.png">
@@ -201,7 +197,7 @@
                 <hr>
                 <div class="footer_opt">
                     <a href="#about_us">About Us</a>
-                    <a href="{{ url('doctors') }}" >Our Psychiatrist</a>
+                    <a href="{{ route('views.psych') }}" >Our Psychiatrist</a> <!-- Updated Link -->
                 </div>
             </div>
             <div class="contact_footer">
@@ -218,8 +214,4 @@
       <div class="line"></div>
     </footer>
   </body>
-
-
-
 </html>
-

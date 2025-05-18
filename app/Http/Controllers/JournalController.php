@@ -11,18 +11,29 @@ class JournalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $journals = Journal::latest('date')->get();
-        return view('User.journal', compact('journals'));
+    public function index(Request $request)
+{
+    $query = Journal::query();
+
+    if ($request->has('search') && $request->search !== null) {
+        $search = $request->search;
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'LIKE', "%{$search}%")
+              ->orWhere('journal_text', 'LIKE', "%{$search}%");
+        });
     }
+
+    $journals = $query->latest('date')->get();
+
+    return view('User.JournalViews.journal', compact('journals'));
+}
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('User.create');
+        return view('User.JournalViews.create');
     }
 
     /**
@@ -53,7 +64,8 @@ class JournalController extends Controller
      */
     public function edit(string $id)
     {
-        $journal = Journal::findOrFail($id);return view('User.edit', compact('journal'));
+        $journal = Journal::findOrFail($id);
+        return view('User.JournalViews.edit', compact('journal'));
     }
 
     public function update(Request $request, string $id)

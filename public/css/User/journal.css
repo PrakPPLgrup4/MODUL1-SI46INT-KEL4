@@ -13,7 +13,7 @@ body {
 li,
 a,
 .lgnbutton {
-  font-family: "Poppins";
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 16px;
   color: black;
@@ -116,7 +116,6 @@ header {
   color: #222;
 }
 
-
 .journal-card {
   background: white;
   border-radius: 12px;
@@ -132,7 +131,6 @@ header {
   border-left-color: #84BD00;
   background-color: #f9fff0;
 }
-
 
 .journal-card-header {
   display: flex;
@@ -153,7 +151,6 @@ header {
   margin-bottom: 1rem;
   padding-right: 150px;
 }
-
 
 .journal-footer {
   display: flex;
@@ -186,7 +183,6 @@ header {
   border-radius: 50%;
 }
 
-
 .floating-plus-btn {
   position: fixed;
   bottom: 40px;
@@ -213,7 +209,6 @@ header {
   background-color: #6aa800;
   transform: scale(1.1);
 }
-
 
 .form-container {
   max-width: 600px;
@@ -265,7 +260,6 @@ header {
 .form-container button {
   margin-top: 2rem;
   width: 100%;
-  background-color: #84BD00;
   color: white;
   padding: 0.75rem;
   font-size: 1rem;
@@ -274,12 +268,16 @@ header {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
 }
 
-.form-container button:hover {
+.submit{
+  background-color: #84BD00;
+}
+
+.submit:hover {
   background-color: #6aa800;
 }
-
 
 .error {
   background-color: #ffefef;
@@ -307,17 +305,18 @@ header {
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .edit-btn {
   background-color: #ffd600;
-  color: #000;
+  color: #ffffff;
   border: none;
 }
 
 .delete-btn {
   background-color: #ff4d4d;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
 }
@@ -328,4 +327,61 @@ header {
 
 .edit-btn:hover {
   background-color: #e6c200;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cancel-btn {
+  padding: 0.75rem;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+}
+
+.cancel-btn:hover {
+  background-color: #c0392b;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.search-bar input[type="text"] {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 60%;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.search-bar button {
+  padding: 0.75rem 1.5rem;
+  background-color: #84BD00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #6aa800;
 }

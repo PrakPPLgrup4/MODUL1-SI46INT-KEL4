@@ -21,7 +21,7 @@
           <li><a href="#">Chat</a></li>
         </ul>
       </nav>
-      <a class="lgnbutton" href="#">Log in</a>
+      <a href="{{ route('login') }}" class="lgnbutton">Login</a>
     </header>
     
     <script src="navIndex.js" async defer></script>
