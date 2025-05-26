@@ -12,6 +12,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\AdminQuizController;
 
 // Landing Page
 Route::get('/', function () {
@@ -47,13 +49,6 @@ Route::get('/symptom', [SymptomController::class, 'index'])->name('views.symptom
 Route::get('/symptomcontent1', [SymptomController::class, 'showContent1'])->name('views.symptomcontent1');
 
 // Journal routes
-#Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');
-#Route::get('/journal/create', [JournalController::class, 'create'])->name('User.create');
-#Route::post('/journal', [JournalController::class, 'store'])->name('journal.store');
-#Route::get('/journal/{id}/edit', [JournalController::class, 'edit'])->name('journal.edit');
-#Route::put('/journal/{id}', [JournalController::class, 'update'])->name('journal.update');
-#Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
-
 Route::prefix('home')->group(function () {
     Route::get('/journal', [JournalController::class, 'index'])->name('views.journal');
     Route::get('/journal/create', [JournalController::class, 'create'])->name('User.create');
@@ -79,3 +74,16 @@ Route::post('/rate-psych', [PsychController::class, 'rate'])->name('psych.rate')
 Route::get('/user-profile', [UserController::class, 'index'])->name('user.profile');
 Route::get('/user-profile/edit', [UserController::class, 'edit'])->name('user.profile.edit');
 Route::post('/user-profile/update', [UserController::class, 'update'])->name('user.profile.update');
+
+// Quiz Depression
+Route::prefix('quiz')->group(function () {
+    Route::get('/quiz/{type}', [QuizController::class, 'show'])->name('quiz.show');
+    Route::post('/quiz/{type}', [QuizController::class, 'submit'])->name('quiz.submit');
+
+
+// Quiz admin
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('quiz', AdminQuizController::class);
+});
+
+});
