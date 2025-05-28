@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewController;
 
 // Landing Page
 Route::get('/', function () {
@@ -79,3 +80,10 @@ Route::post('/rate-psych', [PsychController::class, 'rate'])->name('psych.rate')
 Route::get('/user-profile', [UserController::class, 'index'])->name('user.profile');
 Route::get('/user-profile/edit', [UserController::class, 'edit'])->name('user.profile.edit');
 Route::post('/user-profile/update', [UserController::class, 'update'])->name('user.profile.update');
+
+// review 
+Route::get('/review', [ReviewController::class, 'showForm'])->name('review.form');
+Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+
+// Separate route to view all reviews (optional)
+Route::get('/all-reviews', [ReviewController::class, 'index'])->name('review.index');
