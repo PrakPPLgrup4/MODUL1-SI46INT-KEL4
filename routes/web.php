@@ -14,6 +14,8 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\AdminQuizController;
+use App\Http\Controllers\ReviewController;
+
 
 // Landing Page
 Route::get('/', function () {
@@ -75,6 +77,7 @@ Route::get('/user-profile', [UserController::class, 'index'])->name('user.profil
 Route::get('/user-profile/edit', [UserController::class, 'edit'])->name('user.profile.edit');
 Route::post('/user-profile/update', [UserController::class, 'update'])->name('user.profile.update');
 
+
 // Quiz Depression
 Route::prefix('quiz')->group(function () {
     Route::get('/quiz/{type}', [QuizController::class, 'show'])->name('quiz.show');
@@ -87,3 +90,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 });
+
+// review 
+Route::get('/review', [ReviewController::class, 'showForm'])->name('review.form');
+Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
+
+// Separate route to view all reviews (optional)
+Route::get('/all-reviews', [ReviewController::class, 'index'])->name('review.index');
+
