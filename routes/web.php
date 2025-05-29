@@ -95,6 +95,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::get('/review', [ReviewController::class, 'showForm'])->name('review.form');
 Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 
-// Separate route to view all reviews (optional)
+// Separate route to view all reviews 
 Route::get('/all-reviews', [ReviewController::class, 'index'])->name('review.index');
 
+
+//review edit n delete
+Route::get('/all-reviews/{id}/edit', [ReviewController::class, 'edit'])->name('review.edit');
+Route::put('/all-reviews/{id}', [ReviewController::class, 'update'])->name('review.update');
+Route::delete('/all-reviews/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
