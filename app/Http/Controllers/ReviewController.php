@@ -16,7 +16,11 @@ class ReviewController extends Controller
             'review' => 'required|string',
         ]);
 
-        Review::create($request->only('name', 'rating', 'review'));
+        Review::create([
+            'name' => $request->name,
+            'rating' => $request->rating,
+            'review' => $request->review,
+        ]);
 
         return back()->with('success', 'Review submitted!');
     }
@@ -27,10 +31,44 @@ class ReviewController extends Controller
         $reviews = Review::latest()->get();
         return view('User.reviewViews.review', compact('reviews'));
     }
-    public function index()
-{
-    $reviews = \App\Models\Review::latest()->get();
-    return view('User.reviewViews.all-reviews', compact('reviews'));
-}
-}
 
+    // Show all reviews (admin/user)
+    public function index()
+    {
+        $reviews = Review::latest()->get();
+        return view('User.reviewViews.all-reviews', compact('reviews'));
+    }
+
+    // Show the edit form for any review (no restriction)
+    public function edit($id)
+    {
+        $review = Review::findOrFail($id);
+        return view('User.reviewViews.edit-review', compact('review'));
+    }
+
+    // Update any review (no restriction)
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'review' => 'required|string',
+        ]);
+
+        $review = Review::findOrFail($id);
+        $review->update([
+            'rating' => $request->rating,
+            'review' => $request->review,
+        ]);
+
+        return redirect()->route('review.index')->with('success', 'Review updated.');
+    }
+
+    // Delete any review (no restriction)
+    public function destroy($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->delete();
+
+        return back()->with('success', 'Review deleted.');
+    }
+}
