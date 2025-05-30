@@ -101,7 +101,7 @@
           <div class="test_content1">
             <h3>Stress</h3>
             <p>Results of the PHQ-9 test adaptation to check and measure symptoms of Stress.</p>
-            <a href="#">Test</a>
+            <a href="{{ route('quiz.show', ['type' => 'stress']) }}">Test</a>
           </div>  
         </div>
 
@@ -110,7 +110,7 @@
           <div class="test_content2">
             <h3>Anxiety</h3>
             <p>Results of the PHQ-9 test adaptation to check and measure symptoms of Anxiety.</p>
-            <a href="#">Test</a>
+            <a href="{{ route('quiz.show', ['type' => 'anxiety']) }}">Test</a>
           </div>
         </div>
 
@@ -119,7 +119,7 @@
           <div class="test_content3">
             <h3>Depression</h3>
             <p>Results of the PHQ-9 test adaptation to check and measure symptoms of depression.</p>
-            <a href="#">Test</a>
+            <a href="{{ route('quiz.show', ['type' => 'depression']) }}">Test</a>
           </div>
         </div>
       </div>

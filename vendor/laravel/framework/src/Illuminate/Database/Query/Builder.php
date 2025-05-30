@@ -63,17 +63,7 @@ class Builder implements BuilderContract
     /**
      * The current query value bindings.
      *
-     * @var array{
-     *     select: list<mixed>,
-     *     from: list<mixed>,
-     *     join: list<mixed>,
-     *     where: list<mixed>,
-     *     groupBy: list<mixed>,
-     *     having: list<mixed>,
-     *     order: list<mixed>,
-     *     union: list<mixed>,
-     *     unionOrder: list<mixed>,
-     * }
+     * @var array
      */
     public $bindings = [
         'select' => [],
@@ -4143,7 +4133,7 @@ class Builder implements BuilderContract
     /**
      * Get the current query value bindings in a flattened array.
      *
-     * @return list<mixed>
+     * @return array
      */
     public function getBindings()
     {
@@ -4153,17 +4143,7 @@ class Builder implements BuilderContract
     /**
      * Get the raw array of bindings.
      *
-     * @return array{
-     *      select: list<mixed>,
-     *      from: list<mixed>,
-     *      join: list<mixed>,
-     *      where: list<mixed>,
-     *      groupBy: list<mixed>,
-     *      having: list<mixed>,
-     *      order: list<mixed>,
-     *      union: list<mixed>,
-     *      unionOrder: list<mixed>,
-     * }
+     * @return array
      */
     public function getRawBindings()
     {
@@ -4173,6 +4153,7 @@ class Builder implements BuilderContract
     /**
      * Set the bindings on the query builder.
      *
+
      * @param  list<mixed>  $bindings
      * @param  "select"|"from"|"join"|"where"|"groupBy"|"having"|"order"|"union"|"unionOrder"  $type
      * @return $this
@@ -4235,7 +4216,6 @@ class Builder implements BuilderContract
     /**
      * Merge an array of bindings into our bindings.
      *
-     * @param  self  $query
      * @return $this
      */
     public function mergeBindings(self $query)
@@ -4248,8 +4228,7 @@ class Builder implements BuilderContract
     /**
      * Remove all of the expressions from a list of bindings.
      *
-     * @param  array<mixed>  $bindings
-     * @return list<mixed>
+     * @return array
      */
     public function cleanBindings(array $bindings)
     {
