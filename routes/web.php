@@ -12,10 +12,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\AdminQuizController;
 use App\Http\Controllers\ReviewController;
-
 
 // Landing Page
 Route::get('/', function () {
@@ -63,7 +63,7 @@ Route::prefix('home')->group(function () {
 // Psychiatrist page (user view)
 Route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci');
 
-// Psychiatrist profile page
+// Psychiatrist Profile
 Route::get('/psych', [PsychController::class, 'index'])->name('views.psych');
 
 // Appointment routes
@@ -77,12 +77,18 @@ Route::get('/user-profile', [UserController::class, 'index'])->name('user.profil
 Route::get('/user-profile/edit', [UserController::class, 'edit'])->name('user.profile.edit');
 Route::post('/user-profile/update', [UserController::class, 'update'])->name('user.profile.update');
 
+// Chat Feature
+Route::middleware(['auth'])->group(function () {
+    Route::get('/chat/{receiverType?}/{receiverId?}', [ChatController::class, 'index'])->name('chat.index');
+    Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
+    Route::put('/chat/{chat}', [ChatController::class, 'update'])->name('chat.update');
+    Route::delete('/chat/{chat}', [ChatController::class, 'destroy'])->name('chat.destroy');
+});
 
 // Quiz Depression
 Route::prefix('quiz')->group(function () {
     Route::get('/quiz/{type}', [QuizController::class, 'show'])->name('quiz.show');
     Route::post('/quiz/{type}', [QuizController::class, 'submit'])->name('quiz.submit');
-
 
 // Quiz admin
 Route::prefix('admin')->name('admin.')->group(function () {
