@@ -16,13 +16,14 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\AdminQuizController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\PsychLoginController;
 
 // Landing Page
 Route::get('/', function () {
     return view('landing');
 })->name('views.landing');
 
-// Login & Register
+// USER Login & Register
 Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -30,8 +31,20 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
+// PSYCHIATRIST Login Routes
+Route::get('/psychologist/login', [PsychLoginController::class, 'showLoginForm'])->name('psychologist.login');
+Route::post('/psychologist/login', [PsychLoginController::class, 'login'])->name('psychologist.login.submit');
+Route::post('/psychologist/logout', [PsychLoginController::class, 'logout'])->name('psychologist.logout');
+
 // Homepage (after user login)
 Route::get('/home', [HomeController::class, 'home'])->name('views.Homepage');
+
+// Psychiatrist Dashboard (after psych login)
+Route::middleware(['auth:psych'])->group(function () {
+    Route::get('/psychologist/dashboard', function () {
+        return view('views.psyci');
+    })->name('views.psyci');
+});
 
 // Admin Dashboard (landing)
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
@@ -61,7 +74,7 @@ Route::prefix('home')->group(function () {
 });
 
 // Psychiatrist page (user view)
-Route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci');
+Route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci.public');
 
 // Psychiatrist Profile
 Route::get('/psych', [PsychController::class, 'index'])->name('views.psych');
@@ -69,7 +82,7 @@ Route::get('/psych', [PsychController::class, 'index'])->name('views.psych');
 // Appointment routes
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('views.appointment');
 
-// ✅ Rating route for psychiatrists
+// Rating for psychiatrists
 Route::post('/rate-psych', [PsychController::class, 'rate'])->name('psych.rate');
 
 // User Profile Page
@@ -89,23 +102,17 @@ Route::middleware(['auth'])->group(function () {
 Route::prefix('quiz')->group(function () {
     Route::get('/quiz/{type}', [QuizController::class, 'show'])->name('quiz.show');
     Route::post('/quiz/{type}', [QuizController::class, 'submit'])->name('quiz.submit');
+});
 
 // Quiz admin
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('quiz', AdminQuizController::class);
 });
 
-});
-
-// review 
+// Reviews
 Route::get('/review', [ReviewController::class, 'showForm'])->name('review.form');
 Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
-
-// Separate route to view all reviews 
 Route::get('/all-reviews', [ReviewController::class, 'index'])->name('review.index');
-
-
-//review edit n delete
 Route::get('/all-reviews/{id}/edit', [ReviewController::class, 'edit'])->name('review.edit');
 Route::put('/all-reviews/{id}', [ReviewController::class, 'update'])->name('review.update');
 Route::delete('/all-reviews/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
