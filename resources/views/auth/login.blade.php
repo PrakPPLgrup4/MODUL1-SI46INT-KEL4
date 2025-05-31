@@ -25,6 +25,15 @@
             margin-top: 10px;
             color: #93b800;
         }
+        .role-links a {
+            color: #93b800;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+        .role-links a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -54,7 +63,8 @@
         </div>
 
         <div class="role-links">
-            Login as Psychiatrist | Login as Admin
+            <a href="{{ route('psychologist.login') }}">Login as Psychiatrist</a> |
+            <a href="{{ route('admin.index') }}">Login as Admin</a>
         </div>
 
         <button type="submit" class="btn btn-login mt-3 w-100">Login</button>
