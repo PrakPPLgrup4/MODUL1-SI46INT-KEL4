@@ -6,6 +6,7 @@
     <title>Chat - Psylography</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         :root {
             --psylo-green: #93BF00;
@@ -46,6 +47,7 @@
         .message.sent {
             background-color: #FDE1A5;
             align-self: end;
+            position: relative;
         }
         .message.received {
             background-color: #D3D3D3;
@@ -95,12 +97,8 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-white border-bottom px-4">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('views.Homepage') }}">PSYLOGRAPHY</a>
+        <a class="navbar-brand" href="{{ route('views.psyci.public') }}">PSYLOGRAPHY</a>
         <div class="d-flex align-items-center ms-auto">
-            <a class="nav-link" href="#">Journal</a>
-            <a class="nav-link" href="#">Appointment</a>
-            <a class="nav-link" href="#">Blog</a>
-            <a class="nav-link" href="#">Chat</a>
             <div class="profile-circle ms-3">
                 <i class="fas fa-user"></i>
             </div>
@@ -119,7 +117,7 @@
 
             @foreach($users as $user)
                 @php $isActive = $receiverType === 'user' && $receiverId == $user->id; @endphp
-                <a href="{{ route('chat.index', ['receiverType' => 'user', 'receiverId' => $user->id]) }}"
+                <a href="{{ route('psychchat.index', ['receiverType' => 'user', 'receiverId' => $user->id]) }}"
                    class="d-flex align-items-center text-decoration-none text-dark px-3 py-2 chat-user {{ $isActive ? 'active' : '' }}"
                    style="{{ $isActive ? 'background-color: #FFF4DE;' : '' }}"
                    data-name="{{ strtolower($user->fullname) }}">
@@ -133,7 +131,7 @@
 
             @foreach($psychs as $psych)
                 @php $isActive = $receiverType === 'psych' && $receiverId == $psych->id; @endphp
-                <a href="{{ route('chat.index', ['receiverType' => 'psych', 'receiverId' => $psych->id]) }}"
+                <a href="{{ route('psychchat.index', ['receiverType' => 'psych', 'receiverId' => $psych->id]) }}"
                    class="d-flex align-items-center text-decoration-none text-dark px-3 py-2 chat-user {{ $isActive ? 'active' : '' }}"
                    style="{{ $isActive ? 'background-color: #FFF4DE;' : '' }}"
                    data-name="{{ strtolower($psych->full_name) }}">
@@ -163,15 +161,16 @@
                 <div class="flex-grow-1 overflow-auto p-3 d-flex flex-column" id="chatMessages">
                     @foreach ($chats as $chat)
                         <div 
-                            class="message {{ ($chat->sender_id == Auth::guard('user')->id() && $chat->sender_type === 'user') ? 'sent align-self-end' : 'received align-self-start' }} rounded px-3 py-2 mb-2"
+                            class="message {{ ($chat->sender_id == Auth::guard('psych')->id() && $chat->sender_type === 'psych') ? 'sent align-self-end' : 'received align-self-start' }} rounded px-3 py-2 mb-2"
                             data-chat-id="{{ $chat->id }}"
                             data-message="{{ htmlspecialchars($chat->message, ENT_QUOTES) }}"
                             oncontextmenu="showContextMenu(event, {{ $chat->id }})"
                         >
                             <span class="message-text">{{ $chat->message }}</span>
 
-                            @if($chat->sender_id == Auth::guard('user')->id() && $chat->sender_type === 'user')
-                                <form method="POST" action="{{ route('chat.update', $chat->id) }}" class="edit-form d-none mt-2" onsubmit="return submitEdit(event, {{ $chat->id }})">
+                            {{-- Edit form for the logged-in psych messages --}}
+                            @if($chat->sender_id == Auth::guard('psych')->id() && $chat->sender_type === 'psych')
+                                <form method="POST" action="{{ route('psychchat.update', $chat->id) }}" class="edit-form d-none mt-2" onsubmit="return submitEdit(event, {{ $chat->id }})">
                                     @csrf
                                     @method('PUT')
                                     <input type="text" name="message" class="edit-input" value="{{ $chat->message }}" required />
@@ -183,7 +182,7 @@
                     @endforeach
                 </div>
 
-                <form method="POST" action="{{ route('chat.send') }}" class="d-flex align-items-center border-top p-3">
+                <form method="POST" action="{{ route('psychchat.send') }}" class="d-flex align-items-center border-top p-3">
                     @csrf
                     <input type="hidden" name="receiver_id" value="{{ $receiverId }}" />
                     <input type="hidden" name="receiver_type" value="{{ $receiverType }}" />
@@ -206,15 +205,12 @@
     </ul>
 </div>
 
-<form id="deleteForm" method="POST" style="display:none;">
-    @csrf
-    @method('DELETE')
-</form>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const contextMenu = document.getElementById('contextMenu');
         let currentChatId = null;
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         document.getElementById('searchInput').addEventListener('keyup', function () {
             const filter = this.value.toLowerCase();
@@ -234,13 +230,31 @@
             contextMenu.style.display = 'none';
         });
 
-        document.getElementById('deleteOption').addEventListener('click', () => {
+        document.getElementById('deleteOption').addEventListener('click', async () => {
             if (!currentChatId) return;
-            if (confirm('Are you sure you want to delete this message?')) {
-                const deleteForm = document.getElementById('deleteForm');
-                deleteForm.action = `/chat/${currentChatId}`;
-                deleteForm.submit();
+            if (!confirm('Are you sure you want to delete this message?')) return;
+
+            try {
+                const response = await fetch(`/psychchat/${currentChatId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const messageDiv = document.querySelector(`[data-chat-id="${currentChatId}"]`);
+                    if (messageDiv) messageDiv.remove();
+                    alert('Message deleted!');
+                } else {
+                    alert('Failed to delete message.');
+                }
+            } catch (error) {
+                alert('Error deleting message.');
             }
+
+            contextMenu.style.display = 'none';
         });
 
         document.getElementById('editOption').addEventListener('click', () => {
@@ -251,9 +265,14 @@
             const messageText = messageDiv.querySelector('.message-text');
             const editForm = messageDiv.querySelector('.edit-form');
 
-            messageText.style.display = 'none';
-            editForm.classList.remove('d-none');
-            contextMenu.style.display = 'none';
+            if (editForm) {
+                messageText.style.display = 'none';
+                editForm.classList.remove('d-none');
+                contextMenu.style.display = 'none';
+                editForm.querySelector('input[name="message"]').focus();
+            } else {
+                alert('You cannot edit this message.');
+            }
         });
     });
 
@@ -261,62 +280,75 @@
         event.preventDefault();
         const contextMenu = document.getElementById('contextMenu');
 
-        // Check if the chat message belongs to the logged in user before showing menu
         const messageDiv = event.currentTarget;
-        const userId = "{{ Auth::guard('user')->id() }}";
-        const senderId = messageDiv.getAttribute('data-chat-id');
 
-        // For this example, only show if the message is sent by the logged-in user
+        // Only show context menu if the message belongs to the logged-in psych user
         if (!messageDiv.classList.contains('sent')) {
-            return;
+            contextMenu.style.display = 'none';
+            return false;
         }
 
         currentChatId = chatId;
 
-        contextMenu.style.top = event.pageY + 'px';
-        contextMenu.style.left = event.pageX + 'px';
+        const { clientX: mouseX, clientY: mouseY } = event;
+
+        contextMenu.style.top = `${mouseY}px`;
+        contextMenu.style.left = `${mouseX}px`;
         contextMenu.style.display = 'block';
-    }
 
-    function cancelEdit(chatId) {
-        const messageDiv = document.querySelector(`[data-chat-id="${chatId}"]`);
-        const messageText = messageDiv.querySelector('.message-text');
-        const editForm = messageDiv.querySelector('.edit-form');
-
-        editForm.classList.add('d-none');
-        messageText.style.display = '';
+        return false;
     }
 
     async function submitEdit(event, chatId) {
         event.preventDefault();
-
         const form = event.target;
-        const formData = new FormData(form);
+        const newMessage = form.message.value.trim();
+        if (!newMessage) {
+            alert('Message cannot be empty');
+            return false;
+        }
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         try {
-            const response = await fetch(form.action, {
-                method: 'POST',
+            const response = await fetch(`/psychchat/${chatId}`, {
+                method: 'PUT',
                 headers: {
-                    'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
-                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
                 },
-                body: new URLSearchParams(formData),
+                body: JSON.stringify({ message: newMessage }),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                if (data.success) {
-                    const messageDiv = document.querySelector(`[data-chat-id="${chatId}"]`);
-                    messageDiv.querySelector('.message-text').textContent = formData.get('message');
-                    cancelEdit(chatId);
-                } else {
-                    alert('Failed to update message.');
+
+                const messageDiv = document.querySelector(`[data-chat-id="${chatId}"]`);
+                if (messageDiv) {
+                    messageDiv.querySelector('.message-text').textContent = data.message;
+                    messageDiv.querySelector('.message-text').style.display = '';
+                    form.classList.add('d-none');
                 }
+
+                alert('Message updated!');
             } else {
                 alert('Failed to update message.');
             }
         } catch (error) {
-            alert('Failed to update message.');
+            alert('Error updating message.');
+        }
+        return false;
+    }
+
+    function cancelEdit(chatId) {
+        const messageDiv = document.querySelector(`[data-chat-id="${chatId}"]`);
+        if (!messageDiv) return;
+        const messageText = messageDiv.querySelector('.message-text');
+        const editForm = messageDiv.querySelector('.edit-form');
+        if (editForm) {
+            editForm.classList.add('d-none');
+            messageText.style.display = '';
         }
     }
 </script>

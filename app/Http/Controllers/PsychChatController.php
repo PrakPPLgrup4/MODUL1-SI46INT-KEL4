@@ -8,16 +8,19 @@ use App\Models\Psych;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class ChatController extends Controller
+class PsychChatController extends Controller
 {
     public function __construct()
     {
-        // Only allow authenticated users with 'user' guard
-        $this->middleware('auth:user');
+        // Only allow authenticated users with 'psych' guard
+        $this->middleware('auth:psych');
     }
 
-    public function index($receiverType = null, $receiverId = null)
+    public function index(Request $request)
     {
+        $receiverType = $request->query('receiverType');
+        $receiverId = $request->query('receiverId');
+
         if (Auth::guard('user')->check()) {
             $authUser = Auth::guard('user')->user();
             $authType = 'user';
@@ -25,14 +28,13 @@ class ChatController extends Controller
 
             $psychs = Psych::all();
             $users = User::where('id', '!=', $authId)->get();
-
         } elseif (Auth::guard('psych')->check()) {
             $authUser = Auth::guard('psych')->user();
             $authType = 'psych';
             $authId = $authUser->id;
 
             $users = User::all();
-            $psychs = Psych::where('id', '!=', $authId)->get(); // optional, if needed
+            $psychs = Psych::where('id', '!=', $authId)->get();
         } else {
             abort(403, 'Unauthorized access.');
         }
@@ -53,7 +55,7 @@ class ChatController extends Controller
             })->orderBy('created_at')->get();
         }
 
-        return view('chat.index', compact('psychs', 'users', 'chats', 'receiverType', 'receiverId'));
+        return view('psychchat.index', compact('psychs', 'users', 'chats', 'receiverType', 'receiverId'));
     }
 
     public function send(Request $request)
@@ -96,9 +98,7 @@ class ChatController extends Controller
 
         $chat = Chat::findOrFail($chatId);
 
-        $authId = null;
-        $authType = null;
-
+        // Determine logged-in user guard and ID
         if (Auth::guard('user')->check()) {
             $authId = Auth::guard('user')->id();
             $authType = 'user';
@@ -106,25 +106,23 @@ class ChatController extends Controller
             $authId = Auth::guard('psych')->id();
             $authType = 'psych';
         } else {
-            abort(403, 'Unauthorized action.');
+            return response()->json(['success' => false, 'message' => 'Unauthorized action.'], 403);
         }
 
+        // Only allow update if the logged in user is sender
         if ($chat->sender_id !== $authId || $chat->sender_type !== $authType) {
-            abort(403, 'Unauthorized action.');
+            return response()->json(['success' => false, 'message' => 'Unauthorized action.'], 403);
         }
 
         $chat->message = $request->input('message');
         $chat->save();
 
-        return redirect()->back();
+        return response()->json(['success' => true]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $chatId)
     {
-        $chat = Chat::findOrFail($id);
-
-        $authId = null;
-        $authType = null;
+        $chat = Chat::findOrFail($chatId);
 
         if (Auth::guard('user')->check()) {
             $authId = Auth::guard('user')->id();
@@ -142,6 +140,11 @@ class ChatController extends Controller
 
         $chat->delete();
 
-        return redirect()->back();
+        // Check if AJAX request, respond with JSON, else redirect back
+        if ($request->ajax()) {
+            return response()->json(['success' => true]);
+        } else {
+            return redirect()->back();
+        }
     }
 }
