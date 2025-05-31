@@ -2,21 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quiz;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
+    public function index()
+    {
+        $quizzes = Quiz::all();
+        return view('User.QuizPage.index', compact('quizzes'));
+    }
+
+
     public function show($type)
     {
         // Pastikan tipe quiz yang diminta valid
         $validTypes = ['stress', 'anxiety', 'depression'];
-        if (!in_array($type, $validTypes)) {
+            if (!in_array($type, $validTypes)) {
             abort(404);
-        }
-
-        // Mengarahkan ke view sesuai dengan tipe quiz
+            }
         return view('User.QuizViews.' . $type . 'quiz');
+    }
+
+
+    public function showDynamic($id)
+    {
+        $quiz = Quiz::with('questions')->findOrFail($id);
+
+        // Return a generic quiz page that renders questions dynamically
+        return view('User.QuizPage.dynamic_quiz', compact('quiz'));
     }
 
     public function submit(Request $request, $type)
@@ -53,5 +68,28 @@ class QuizController extends Controller
     
         return view('User.QuizViews.' . $type . 'quiz', compact('score'));
         
+    }
+
+    public function submitDynamic(Request $request, $id)
+    {
+        $quiz = Quiz::with('questions')->findOrFail($id);
+
+        $rules = [];
+        foreach ($quiz->questions as $index => $question) {
+            $rules['q' . ($index + 1)] = 'required|in:0,1';
+        }
+
+        $request->validate($rules);
+
+        $answers = $request->only(array_keys($rules));
+        $score = 0;
+
+        foreach ($answers as $answer) {
+            if ($answer == '1') {
+                $score++;
+            }
+        }
+
+        return view('User.QuizPage.dynamic_quiz', compact('quiz', 'score'));
     }
 }

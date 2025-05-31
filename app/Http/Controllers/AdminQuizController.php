@@ -28,7 +28,7 @@ class AdminQuizController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'questions' => 'required|array|size:10',
             'questions.*' => 'required|string',
         ]);
@@ -38,8 +38,11 @@ class AdminQuizController extends Controller
         $quiz->description = $request->description;
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('quiz_images', 'public');
-            $quiz->image = $path;
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            // Save image to public/uploads/quizzes (you can choose folder name)
+            $file->move(public_path('uploads/quizzes'), $filename);
+            $quiz->image = 'uploads/quizzes/' . $filename; // Save relative path to DB
         }
 
         $quiz->save();
@@ -61,32 +64,34 @@ class AdminQuizController extends Controller
     // Update quiz dan soal-soalnya
     public function update(Request $request, $id)
     {
+        $quiz = Quiz::findOrFail($id);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'questions' => 'required|array|size:10',
             'questions.*' => 'required|string',
         ]);
 
-        $quiz = Quiz::findOrFail($id);
         $quiz->title = $request->title;
         $quiz->description = $request->description;
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika perlu
-            if ($quiz->image) {
-                \Storage::disk('public')->delete($quiz->image);
+            // Delete old image if exists
+            if ($quiz->image && file_exists(public_path($quiz->image))) {
+                unlink(public_path($quiz->image));
             }
-            $path = $request->file('image')->store('quiz_images', 'public');
-            $quiz->image = $path;
+            $file = $request->file('image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/quizzes'), $filename);
+            $quiz->image = 'uploads/quizzes/' . $filename;
         }
 
         $quiz->save();
 
-        // Update soal: hapus dulu soal lama, lalu buat baru
+        // Update questions: delete old, add new
         $quiz->questions()->delete();
-
         foreach ($request->questions as $questionText) {
             $quiz->questions()->create(['question_text' => $questionText]);
         }
