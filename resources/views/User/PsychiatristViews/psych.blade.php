@@ -106,6 +106,25 @@
             display: none;
             z-index: 1000;
         }
+        .psy-buttons {
+                margin-top: 10px;
+            }
+
+            .psy-buttons button {
+                padding: 6px 12px;
+                margin-right: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background-color 0.2s ease;
+            }
+
+            .psy-buttons button:hover {
+                background-color: #45a049;
+            }
     </style>
 </head>
 <body>
@@ -125,8 +144,44 @@
 
 <div class="container mt-5">
     <h2 class="text-center mb-5">Our Psychiatrist</h2>
-
+    
+    
     @foreach($psychs as $psych)
+        <div class="psy-card" onclick="openModal({{ $psych->id }}, '{{ $psych->full_name }}', '{{ $psych->description }}', '{{ asset('storage/' . $psych->picture) }}', {{ $psych->average_rating }})">
+            <img src="{{ asset('storage/' . $psych->picture) }}" alt="{{ $psych->full_name }}" class="psy-image">
+            <div class="psy-content">
+                <h4>{{ $psych->full_name }}</h4>
+                <p>{{ $psych->description }}</p>
+                <p class="rating-text">
+                    <strong>Rating:</strong>
+                    @php
+                        $fullStars = floor($psych->average_rating);
+                        $halfStar = ($psych->average_rating - $fullStars >= 0.5);
+                    @endphp
+                    @for($i = 0; $i < $fullStars; $i++)
+                        <span class="star">★</span>
+                    @endfor
+                    @if($halfStar)
+                        <span class="star">☆</span>
+                    @endif
+                    <span class="text-muted">({{ number_format($psych->average_rating, 1) }})</span>
+                </p>
+
+                
+                <div class="psy-buttons">
+                    <a href="{{ route('review.form') }}">
+                        <button onclick="event.stopPropagation();">Review</button>
+                    </a>
+                    <a href="{{ route('review.index') }}">
+                        <button onclick="event.stopPropagation();">View Reviews</button>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    @endforeach
+
+    <!-- @foreach($psychs as $psych)
         <div class="psy-card" onclick="openModal({{ $psych->id }}, '{{ $psych->full_name }}', '{{ $psych->description }}', '{{ asset('storage/' . $psych->picture) }}', {{ $psych->average_rating }})">
             <img src="{{ asset('storage/' . $psych->picture) }}" alt="{{ $psych->full_name }}" class="psy-image">
             <div class="psy-content">
@@ -148,7 +203,7 @@
                 </p>
             </div>
         </div>
-    @endforeach
+    @endforeach -->
 </div>
 
 <!-- The Modal -->
