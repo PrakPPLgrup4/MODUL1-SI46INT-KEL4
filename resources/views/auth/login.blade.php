@@ -64,7 +64,7 @@
 
         <div class="role-links">
             <a href="{{ route('psychologist.login') }}">Login as Psychiatrist</a> |
-            <a href="{{ route('admin.index') }}">Login as Admin</a>
+            <a href="{{ route('admin.login') }}">Login as Admin</a>
         </div>
 
         <button type="submit" class="btn btn-login mt-3 w-100">Login</button>

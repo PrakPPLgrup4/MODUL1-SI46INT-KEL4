@@ -11,17 +11,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <header>
+    <header style="display: flex; align-items: center; padding: 10px 20px;">
       <img class="logo" src="images/logo.png" alt="logo">
-      <nav>
-        <ul class="nav_links">
+      <nav style="margin-left: 20px; flex-grow: 1;">
+        <ul class="nav_links" style="display: flex; gap: 20px; list-style: none; margin: 0; padding: 0;">
           <li><a href="#">Appointment</a></li>
           <li><a href="#">Blog</a></li>
-          <li><a href="#">Chat</a></li>
+          <li><a href="{{ route('psychchat.index') }}">Chat</a></li>
         </ul>
       </nav>
-    <img style="width:50px; margin-left:15px;" src="images/profile.png" alt="profile">
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img style="width:50px;" src="images/profile.png" alt="profile">
+        <form method="POST" action="{{ route('psychologist.logout') }}">
+          @csrf
+          <button type="submit" 
+                  style="
+                    padding: 8px 12px;
+                    background-color: #e74c3c;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                  ">
+            Logout
+          </button>
+        </form>
+      </div>
     </header>
+
     
     <script src="navIndex.js" async defer></script>
 
