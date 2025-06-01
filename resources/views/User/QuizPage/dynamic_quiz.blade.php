@@ -75,22 +75,25 @@
         if ($score >= 7) {
           $status = "You probably have " . strtolower($quiz->title) . "!";
           $description = "Your answers indicate a high level of " . strtolower($quiz->title) . ". Please consider seeking support from a mental health professional.";
-          $image = strtolower($quiz->title) . "_high.png";
+          $image = strtolower($quiz->title) . "sad.png";
           $colorClass = "danger";
-        } elseif ($score >= 5) {
+          $showFindMore = true;
+        } elseif ($score >= 6) {
           $status = "You might have " . strtolower($quiz->title) . "!";
           $description = "Some signs of " . strtolower($quiz->title) . " are present. Monitor your well-being and consider talking to someone you trust.";
-          $image = strtolower($quiz->title) . "_medium.png";
+          $image = strtolower($quiz->title) . "concern.png";
           $colorClass = "warning";
-        } elseif ($score == 4) {
+          $showFindMore = true;
+        } elseif ($score == 5) {
           $status = "Your result is neutral.";
           $description = "Your results are neutral. Maintain healthy habits and monitor your emotional health.";
-          $image = strtolower($quiz->title) . "_neutral.png";
+          $image = strtolower($quiz->title) . "straight.png";
           $colorClass = "neutral";
+          $showFindMore = true;
         } else {
           $status = "You don’t seem to have " . strtolower($quiz->title) . ".";
           $description = "You don’t show significant signs of " . strtolower($quiz->title) . ". Keep practicing self-care!";
-          $image = strtolower($quiz->title) . "_safe.png";
+          $image = strtolower($quiz->title) . "happy.png";
           $colorClass = "safe";
         }
       @endphp
@@ -99,7 +102,12 @@
         <h2>Done!</h2>
         <h3 class="{{ $colorClass }}">{{ $status }}</h3>
         <img src="{{ asset('images/' . $image) }}" alt="result-image" />
-        <p>{{ $description }}</p>
+        <p>
+          {{ $description }}
+          @if ($showFindMore)
+            <a href="{{ route('views.symptom') }}">Find more</a>
+          @endif
+        </p>
       </div>
     @endif
 

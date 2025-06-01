@@ -99,22 +99,25 @@
         if ($score >= 7) {
           $status = "You probably have anxiety!";
           $description = "Your answers indicate a high level of anxiety. Please consider seeking support from a mental health professional.";
-          $image = "anxiety_high.png";
+          $image = "sad.png";
           $colorClass = "danger";
+          $showFindMore = true;
         } elseif ($score == 6) {
           $status = "You might have anxiety!";
           $description = "Some signs of anxiety are present. Monitor your well-being and consider talking to someone you trust.";
-          $image = "anxiety_medium.png";
+          $image = "concern.png";
           $colorClass = "warning";
+          $showFindMore = true;
         } elseif ($score == 5) {
           $status = "Your result is neutral.";
           $description = "Your results are neutral. Maintain healthy habits and monitor your emotional health.";
-          $image = "anxiety_neutral.png";
+          $image = "straight.png";
           $colorClass = "neutral";
+          $showFindMore = true;
         } else {
           $status = "You don’t seem to have anxiety.";
           $description = "You don’t show significant signs of anxiety. Keep practicing self-care!";
-          $image = "anxiety_safe.png";
+          $image = "happy.png";
           $colorClass = "safe";
         }
       @endphp
@@ -123,7 +126,12 @@
         <h2>Done!</h2>
         <h3 class="{{ $colorClass }}">{{ $status }}</h3>
         <img src="{{ asset('images/' . $image) }}" alt="result-image">
-        <p>{{ $description }}</p>
+        <p>
+          {{ $description }}
+          @if ($showFindMore)
+            <a href="{{ route('views.symptom') }}">Find more</a>
+          @endif
+        </p>
       </div>
     @endif
 
