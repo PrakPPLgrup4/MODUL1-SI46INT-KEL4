@@ -110,7 +110,7 @@
           <img src="images/Stress.png">
           <div class="test_content1">
             <h3>Stress</h3>
-            <p>Results of the Quiz is to test and check check and measure symptoms of Stress.</p>
+            <p>Results of the Quiz is to test and check and measure symptoms of Stress.</p>
             <a href="{{ route('quiz.show', ['type' => 'stress']) }}">Test</a>
           </div>  
         </div>
