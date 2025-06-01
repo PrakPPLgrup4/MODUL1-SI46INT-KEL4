@@ -95,7 +95,9 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-white border-bottom px-4">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('views.Homepage') }}">PSYLOGRAPHY</a>
+        <a href="{{ route('views.Homepage') }}">
+            <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo" style="height: 40px;">
+        </a>
         <div class="d-flex align-items-center ms-auto">
             <a class="nav-link" href="#">Journal</a>
             <a class="nav-link" href="#">Appointment</a>

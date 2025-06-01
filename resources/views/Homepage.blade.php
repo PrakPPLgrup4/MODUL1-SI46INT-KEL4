@@ -139,38 +139,12 @@
       </div> 
     </div>
 
-    <div class="psychiatrist">
-      <h1>Our Psychiatrist</h1>
-
-      <div class="psy_container">
-        <div class="psy_profile1">
-          <div>
-            <img src="images/psy2.png">
-          </div>
-          <h3>Dr. John Doe</h3>
-          <p>Psychiatrist</p>
-        </div>
-
-        <div class="psy_profile2">
-          <div>
-            <img src="images/psy1.png">
-          </div>
-          <h3>Dr. Jane Smith</h3>
-          <p>Psychiatrist</p>
-        </div>
-
-        <div class="psy_profile3">
-          <div>
-            <img src="images/psy3.png">
-          </div>
-          <h3>Dr. Emily Johnson</h3>
-          <p>Psychiatrist</p>
-        </div>
-      </div>
-        <div class="psy_button">
-          <a href="{{ route('views.psych') }}">See All Our Psychiatrist</a>
-        </div> 
+    <div class="psy_button">
+      <a href="{{ route('views.psych') }}" style="display: inline-block; padding: 12px 24px; font-size: 18px; color: white; border-radius: 8px; text-decoration: none;">
+        See All Our Psychiatrist
+      </a>
     </div>
+
 
     <div class= "news">
       <h1>Read about mental health</h1>
