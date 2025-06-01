@@ -133,6 +133,10 @@
           </div>
         </div>
       </div>
+
+      <div class="psy_button">
+         <a href="{{ route('quiz.index') }}">See More Quiz</a>
+      </div> 
     </div>
 
     <div class="psychiatrist">

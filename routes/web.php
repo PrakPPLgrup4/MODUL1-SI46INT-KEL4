@@ -108,6 +108,16 @@ Route::middleware(['auth:user'])->group(function () {
     Route::delete('/chat/{chat}', [ChatController::class, 'destroy'])->name('chat.destroy');
 });
 
+
+// Quiz untuk user
+Route::get('/quizzes', [QuizController::class, 'index'])->name('quiz.index');
+Route::get('/quiz/{type}', [QuizController::class, 'show'])->name('quiz.show');
+Route::post('/quiz/{type}/submit', [QuizController::class, 'submit'])->name('quiz.submit');
+Route::get('/quiz/dynamic/{id}', [QuizController::class, 'showDynamic'])->name('quiz.dynamic.show');
+
+Route::post('/quiz/dynamic/{id}/submit', [QuizController::class, 'submitDynamic'])->name('quiz.dynamic.submit');
+
+
 // Psychologist Chat Feature
 Route::middleware(['auth:psych'])->group(function () {
     Route::get('/psychchat', [PsychChatController::class, 'index'])->name('psychchat.index');
@@ -122,8 +132,11 @@ Route::prefix('quiz')->group(function () {
     Route::post('/quiz/{type}', [QuizController::class, 'submit'])->name('quiz.submit');
 });
 
-// Quiz admin
+
+// Quiz untuk admin (admin/quiz/...)
 Route::prefix('admin')->name('admin.')->group(function () {
+    // ...route lainnya...
+    
     Route::resource('quiz', AdminQuizController::class);
 });
 
