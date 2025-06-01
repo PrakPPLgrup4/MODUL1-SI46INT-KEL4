@@ -99,22 +99,25 @@
         if ($score >= 7) {
           $status = "You probably have high stress!";
           $description = "Your answers indicate a high level of stress. Consider practicing relaxation techniques and seeking support if needed.";
-          $image = "stress_high.png";
+          $image = "sad.png";
           $colorClass = "danger";
+          $showFindMore = true;
         } elseif ($score == 6) {
           $status = "You might be experiencing stress!";
           $description = "Some signs of stress are present. Monitor your well-being and try to manage your stress levels.";
-          $image = "stress_medium.png";
+          $image = "concern.png";
           $colorClass = "warning";
+          $showFindMore = true;
         } elseif ($score == 5) {
           $status = "Your result is neutral.";
           $description = "Your results are neutral. Maintain healthy habits and monitor your stress.";
-          $image = "stress_neutral.png";
+          $image = "straight.png";
           $colorClass = "neutral";
+          $showFindMore = true;
         } else {
           $status = "You don’t seem to have significant stress.";
           $description = "You don’t show significant signs of stress. Keep practicing self-care and healthy routines!";
-          $image = "stress_safe.png";
+          $image = "happy.png";
           $colorClass = "safe";
         }
       @endphp
@@ -123,7 +126,12 @@
         <h2>Done!</h2>
         <h3 class="{{ $colorClass }}">{{ $status }}</h3>
         <img src="{{ asset('images/' . $image) }}" alt="result-image">
-        <p>{{ $description }}</p>
+        <p>
+          {{ $description }}
+          @if ($showFindMore)
+            <a href="{{ route('views.symptom') }}">Find more</a>
+          @endif
+        </p>
       </div>
     @endif
 

@@ -99,18 +99,21 @@
         if ($score >= 7) {
           $status = "You probably have depression!";
           $description = "Your answers indicate a high level of depression. Please consider seeking support from a mental health professional.";
-          $image = "insomnia.png";
+          $image = "sad.png";
           $colorClass = "danger";
+          $showFindMore = true;
         } elseif ($score == 6) {
           $status = "You might have depression!";
           $description = "Some signs of depression are present. Monitor your well-being and consider talking to someone you trust.";
-          $image = "thinking.png";
+          $image = "concern.png";
           $colorClass = "warning";
+          $showFindMore = true;
         } elseif ($score == 5) {
           $status = "Your result is neutral.";
           $description = "Your results are neutral. Maintain healthy habits and monitor your emotional health.";
-          $image = "neutral.png";
+          $image = "straight.png";
           $colorClass = "neutral";
+          $showFindMore = true;
         } else {
           $status = "You don’t seem to have depression.";
           $description = "You don’t show significant signs of depression. Keep practicing self-care!";
@@ -122,8 +125,14 @@
       <div class="result-section">
         <h2>Done!</h2>
         <h3 class="{{ $colorClass }}">{{ $status }}</h3>
+        
         <img src="{{ asset('images/' . $image) }}" alt="result-image">
-        <p>{{ $description }}</p>
+        <p>
+          {{ $description }}
+          @if ($showFindMore)
+            <a href="{{ route('views.symptom') }}">Find more</a>
+          @endif
+        </p>
       </div>
     @endif
 

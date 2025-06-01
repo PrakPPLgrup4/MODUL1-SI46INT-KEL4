@@ -1,6 +1,7 @@
 @extends('admin.index')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/Admin/quiz-edit.css') }}">
 <h1 class="mb-4">Edit Quiz</h1>
 
 @if ($errors->any())
