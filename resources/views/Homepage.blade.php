@@ -18,11 +18,21 @@
           <li><a href="{{ route('views.journal') }}">Journal</a></li>
           <li><a href="#">Appointment</a></li>
           <li><a href="#">Blog</a></li>
-          <li><a href="#">Chat</a></li>
+          <li><a href="{{ route('chat.index') }}">Chat</a></li>
         </ul>
       </nav>
-    <img style="width:50px; margin-left:15px;" src="images/profile.png" alt="profile">
+
+      <div style="display: flex; align-items: center; gap: 10px; margin-left: auto; margin-right: 20px;">
+        <img style="width:50px;" src="images/profile.png" alt="profile">
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" style="padding: 8px 12px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Logout
+          </button>
+        </form>
+      </div>
     </header>
+
     
     <script src="navIndex.js" async defer></script>
 

@@ -13,10 +13,12 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\PsychChatController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\AdminQuizController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PsychLoginController;
+use App\Http\Controllers\AdminLoginController;
 
 // Landing Page
 Route::get('/', function () {
@@ -36,8 +38,16 @@ Route::get('/psychologist/login', [PsychLoginController::class, 'showLoginForm']
 Route::post('/psychologist/login', [PsychLoginController::class, 'login'])->name('psychologist.login.submit');
 Route::post('/psychologist/logout', [PsychLoginController::class, 'logout'])->name('psychologist.logout');
 
+// ADMIN Login Routes
+Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+
 // Homepage (after user login)
-Route::get('/home', [HomeController::class, 'home'])->name('views.Homepage');
+Route::middleware(['auth:user'])->group(function () {
+    // Homepage (after user login)
+    Route::get('/home', [HomeController::class, 'home'])->name('views.Homepage');
+});
 
 // Psychiatrist Dashboard (after psych login)
 Route::middleware(['auth:psych'])->group(function () {
@@ -50,7 +60,7 @@ Route::middleware(['auth:psych'])->group(function () {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
 // Admin Routes (grouped with prefix and middleware)
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
     Route::get('psychs', [AdminController::class, 'managePsychs'])->name('psychs');
     Route::get('psychs/create', [AdminController::class, 'create'])->name('create');
     Route::post('psychs', [AdminController::class, 'store'])->name('store');
@@ -90,13 +100,14 @@ Route::get('/user-profile', [UserController::class, 'index'])->name('user.profil
 Route::get('/user-profile/edit', [UserController::class, 'edit'])->name('user.profile.edit');
 Route::post('/user-profile/update', [UserController::class, 'update'])->name('user.profile.update');
 
-// Chat Feature
-Route::middleware(['auth'])->group(function () {
+// User Chat Feature
+Route::middleware(['auth:user'])->group(function () {
     Route::get('/chat/{receiverType?}/{receiverId?}', [ChatController::class, 'index'])->name('chat.index');
     Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
     Route::put('/chat/{chat}', [ChatController::class, 'update'])->name('chat.update');
     Route::delete('/chat/{chat}', [ChatController::class, 'destroy'])->name('chat.destroy');
 });
+
 
 // Quiz untuk user
 Route::get('/quizzes', [QuizController::class, 'index'])->name('quiz.index');
@@ -105,6 +116,21 @@ Route::post('/quiz/{type}/submit', [QuizController::class, 'submit'])->name('qui
 Route::get('/quiz/dynamic/{id}', [QuizController::class, 'showDynamic'])->name('quiz.dynamic.show');
 
 Route::post('/quiz/dynamic/{id}/submit', [QuizController::class, 'submitDynamic'])->name('quiz.dynamic.submit');
+
+
+// Psychologist Chat Feature
+Route::middleware(['auth:psych'])->group(function () {
+    Route::get('/psychchat', [PsychChatController::class, 'index'])->name('psychchat.index');
+    Route::post('/psychchat/send', [PsychChatController::class, 'send'])->name('psychchat.send');
+    Route::put('/psychchat/{chat}', [PsychChatController::class, 'update'])->name('psychchat.update');
+    Route::delete('/psychchat/{chat}', [PsychChatController::class, 'destroy'])->name('psychchat.destroy');
+});
+
+// Quiz Depression
+Route::prefix('quiz')->group(function () {
+    Route::get('/quiz/{type}', [QuizController::class, 'show'])->name('quiz.show');
+    Route::post('/quiz/{type}', [QuizController::class, 'submit'])->name('quiz.submit');
+});
 
 
 // Quiz untuk admin (admin/quiz/...)

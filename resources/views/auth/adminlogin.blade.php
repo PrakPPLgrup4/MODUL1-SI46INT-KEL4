@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Psylography - Psychiatrist Login</title>
+    <title>Psylography - Admin Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background-color: #fff; font-family: Arial, sans-serif; }
@@ -39,7 +39,7 @@
 <body>
 
 <div class="text-center mt-5">
-    <h2><strong>Psychiatrist Sign In</strong></h2>
+    <h2><strong>Admin Sign In</strong></h2>
 </div>
 
 <div class="login-box">
@@ -51,7 +51,7 @@
         <div class="alert alert-danger">{{ $errors->first('login_error') }}</div>
     @endif
 
-    <form method="POST" action="{{ route('psychologist.login') }}">
+    <form method="POST" action="{{ route('admin.login.submit') }}">
         @csrf
         <div class="mb-3">
             <label for="username">Username</label>
@@ -71,11 +71,10 @@
 
         <div class="role-links">
             <a href="{{ route('login') }}">Login as User</a> |
-            <a href="{{ route('admin.login') }}">Login as Admin</a>
+            <a href="{{ route('psychologist.login') }}">Login as Psychiatrist</a>
         </div>
 
         <button type="submit" class="btn btn-login mt-3 w-100">Login</button>
-
     </form>
 </div>
 
