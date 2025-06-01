@@ -110,7 +110,7 @@
           <img src="images/Stress.png">
           <div class="test_content1">
             <h3>Stress</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of Stress.</p>
+            <p>Results of the Quiz is to test and check check and measure symptoms of Stress.</p>
             <a href="{{ route('quiz.show', ['type' => 'stress']) }}">Test</a>
           </div>  
         </div>
@@ -119,7 +119,7 @@
           <img src="images/Anxiety.png">
           <div class="test_content2">
             <h3>Anxiety</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of Anxiety.</p>
+            <p>Results of the Quiz is to test and check check and measure symptoms of Anxiety.</p>
             <a href="{{ route('quiz.show', ['type' => 'anxiety']) }}">Test</a>
           </div>
         </div>
@@ -128,7 +128,7 @@
           <img src="images/Depression.png">
           <div class="test_content3">
             <h3>Depression</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of depression.</p>
+            <p>Results of the Quiz is to test and check and measure symptoms of depression.</p>
             <a href="{{ route('quiz.show', ['type' => 'depression']) }}">Test</a>
           </div>
         </div>
@@ -227,5 +227,6 @@
 
       <div class="line"></div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </body>
 </html>
