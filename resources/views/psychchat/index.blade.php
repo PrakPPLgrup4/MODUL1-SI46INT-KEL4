@@ -97,7 +97,9 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-white border-bottom px-4">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('views.psyci.public') }}">PSYLOGRAPHY</a>
+        <a href="{{ route('views.psyci.public') }}">
+            <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo" style="height: 40px;">
+        </a>
         <div class="d-flex align-items-center ms-auto">
             <div class="profile-circle ms-3">
                 <i class="fas fa-user"></i>
