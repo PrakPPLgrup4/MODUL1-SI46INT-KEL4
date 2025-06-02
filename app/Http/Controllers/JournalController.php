@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Journal;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserPoint;
 
 class JournalController extends Controller
 {
@@ -48,6 +49,16 @@ class JournalController extends Controller
         ]);
 
         Journal::create($request->all());
+        // Tambah poin
+        $earnedPoints = 10; // misalnya bikin jurnal dapat 10 poin
+        $userPoint = UserPoint::firstOrCreate(
+            ['user_id' => Auth::id()],
+            ['points' => 0, 'total_earned' => 0, 'total_spent' => 0]
+        );
+
+        $userPoint->points += $earnedPoints;
+        $userPoint->total_earned += $earnedPoints;
+        $userPoint->save();
         return redirect()->route('views.journal')->with('success', 'Journal entry added!');
     }
 

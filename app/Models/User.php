@@ -23,4 +23,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
