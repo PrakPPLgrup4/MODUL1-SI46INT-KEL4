@@ -10,18 +10,74 @@
     <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   </head>
+
+  <style>
+    .review {
+      margin:70px 50px;
+    }
+
+    .review_child{
+      background-color: #EDEDED;
+      padding:30px;
+      border-radius:20px;
+    }
+
+    .review_scroll {
+      margin:30px 50px;
+      display:flex;
+      flex-direction: column;
+      gap: 40px;
+      height: 400px;
+      overflow: auto;
+      padding-right: 5px;
+    }
+
+    .review_scroll p {
+      background-color: white;
+      padding:40px;
+      border-radius:20px;
+
+    }
+
+    .review_scroll::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .review_scroll::-webkit-scrollbar-thumb {
+      background: #7F7F7F; 
+      border-radius: 10px;
+    }
+  </style>
   <body>
-    <header>
+    <header style="display: flex; align-items: center; padding: 10px 20px;">
       <img class="logo" src="images/logo.png" alt="logo">
-      <nav>
-        <ul class="nav_links">
+      <nav style="margin-left: 20px; flex-grow: 1;">
+        <ul class="nav_links" style="display: flex; gap: 20px; list-style: none; margin: 0; padding: 0;">
           <li><a href="#">Appointment</a></li>
           <li><a href="#">Blog</a></li>
-          <li><a href="#">Chat</a></li>
+          <li><a href="{{ route('psychchat.index') }}">Chat</a></li>
         </ul>
       </nav>
-    <img style="width:50px; margin-left:15px;" src="images/profile.png" alt="profile">
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img style="width:50px;" src="images/profile.png" alt="profile">
+        <form method="POST" action="{{ route('psychologist.logout') }}">
+          @csrf
+          <button type="submit" 
+                  style="
+                    padding: 8px 12px;
+                    background-color: #e74c3c;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                  ">
+            Logout
+          </button>
+        </form>
+      </div>
     </header>
+
     
     <script src="navIndex.js" async defer></script>
 
@@ -54,107 +110,28 @@
     </div>
     
     
-    <div class="pentool">
+    <div class= "review">
 
-      <div class="pentool_index">
-        <img src="images/Pentool.png">
-      </div>
+      <h1>Review By Users</h1>
 
-        <div class="pentool_content">
-          <div class="pentool_h1">
-            <h1>Start Your Own Journaling Adventure </h1>
-          </div>
-          
-          <div class="pentool_h2">
-            <h2>Start your own journaling for better self</h2>
-          </div>
-          
-          <div class="pentool_text">
-            <p>Stress isn’t always harmful, but prolonged stress can affect your health. It often stems from new experiences or situations beyond your control. While stress is a natural part of life, finding healthy ways to cope can make a significant difference in your well-being.</p>
-          </div>
-
-          <div class="pentool_button">
-            <a href="#">Start journaling</a>
-          </div>  
-        </div>
-    </div>
-
-    <div class="test">
-
-      <div class="circle1">
-        <img src="images/Circle.png">
-      </div>
-
-      <div class="circle2">
-        <img src="images/Circle.png">
-      </div>
-
-      <div class="test_text">
-        <h1>Mental Health Test</h1>
-        <h2>Express check, instant results.</h2>
-      </div>
-      
-      <div class="test_container">
-        <div class="test_image1">
-          <img src="images/Stress.png">
-          <div class="test_content1">
-            <h3>Stress</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of Stress.</p>
-            <a href="#">Test</a>
-          </div>  
-        </div>
-
-        <div class="test_image2">
-          <img src="images/Anxiety.png">
-          <div class="test_content2">
-            <h3>Anxiety</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of Anxiety.</p>
-            <a href="#">Test</a>
-          </div>
-        </div>
-
-        <div class="test_image3">
-          <img src="images/Depression.png">
-          <div class="test_content3">
-            <h3>Depression</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of depression.</p>
-            <a href="#">Test</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="psychiatrist">
-      <h1>Our Psychiatrist</h1>
-
-      <div class="psy_container">
-        <div class="psy_profile1">
+      <div class="review_child">
+        <h1> Recents</h1>
+        <div class="review_scroll">
+          <!-- DUMMY -->
           <div>
-            <img src="images/psy2.png">
+            <p>test</p>
           </div>
-          <h3>Dr. John Doe</h3>
-          <p>Psychiatrist</p>
-        </div>
-
-        <div class="psy_profile2">
           <div>
-            <img src="images/psy1.png">
+            <p>test</p>
           </div>
-          <h3>Dr. Jane Smith</h3>
-          <p>Psychiatrist</p>
-        </div>
-
-        <div class="psy_profile3">
           <div>
-            <img src="images/psy3.png">
+            <p>test</p>
           </div>
-          <h3>Dr. Emily Johnson</h3>
-          <p>Psychiatrist</p>
+          <div>
+            <p>test</p>
+          </div>
+
         </div>
-      </div>
-        <div class="psy_button">
-          <a href="#">See All Our Psychiatrist</a>
-        </div> 
     </div>
 
 

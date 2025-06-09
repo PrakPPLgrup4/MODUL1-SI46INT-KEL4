@@ -21,13 +21,14 @@ class PsychLoginController extends Controller
             'password' => ['required'],
         ]);
 
+        // Use the 'psych' guard explicitly
         if (Auth::guard('psych')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/psyci');
         }
 
         return back()->withErrors([
-            'login_error' => 'The provided credentials do not match our records.',
+            'username' => 'The provided credentials do not match our records.', // changed key for proper field highlighting
         ])->withInput();
     }
 

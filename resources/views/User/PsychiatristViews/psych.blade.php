@@ -130,7 +130,9 @@
 <body>
 
 <header>
-    <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+    <a href="{{ route('views.Homepage') }}">
+        <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo">
+    </a>
     <nav>
         <ul class="nav_links">
             <li><a href="#">Journal</a></li>

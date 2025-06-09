@@ -18,11 +18,21 @@
           <li><a href="{{ route('views.journal') }}">Journal</a></li>
           <li><a href="#">Appointment</a></li>
           <li><a href="#">Blog</a></li>
-          <li><a href="#">Chat</a></li>
+          <li><a href="{{ route('chat.index') }}">Chat</a></li>
         </ul>
       </nav>
-    <img style="width:50px; margin-left:15px;" src="images/profile.png" alt="profile">
+
+      <div style="display: flex; align-items: center; gap: 10px; margin-left: auto; margin-right: 20px;">
+        <img style="width:50px;" src="images/profile.png" alt="profile">
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" style="padding: 8px 12px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Logout
+          </button>
+        </form>
+      </div>
     </header>
+
     
     <script src="navIndex.js" async defer></script>
 
@@ -100,7 +110,7 @@
           <img src="images/Stress.png">
           <div class="test_content1">
             <h3>Stress</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of Stress.</p>
+            <p>Results of the Quiz is to test and check and measure symptoms of Stress.</p>
             <a href="{{ route('quiz.show', ['type' => 'stress']) }}">Test</a>
           </div>  
         </div>
@@ -109,7 +119,7 @@
           <img src="images/Anxiety.png">
           <div class="test_content2">
             <h3>Anxiety</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of Anxiety.</p>
+            <p>Results of the Quiz is to test and check check and measure symptoms of Anxiety.</p>
             <a href="{{ route('quiz.show', ['type' => 'anxiety']) }}">Test</a>
           </div>
         </div>
@@ -118,45 +128,23 @@
           <img src="images/Depression.png">
           <div class="test_content3">
             <h3>Depression</h3>
-            <p>Results of the PHQ-9 test adaptation to check and measure symptoms of depression.</p>
+            <p>Results of the Quiz is to test and check and measure symptoms of depression.</p>
             <a href="{{ route('quiz.show', ['type' => 'depression']) }}">Test</a>
           </div>
         </div>
       </div>
+
+      <div class="psy_button">
+         <a href="{{ route('quiz.index') }}">See More Quiz</a>
+      </div> 
     </div>
 
-    <div class="psychiatrist">
-      <h1>Our Psychiatrist</h1>
-
-      <div class="psy_container">
-        <div class="psy_profile1">
-          <div>
-            <img src="images/psy2.png">
-          </div>
-          <h3>Dr. John Doe</h3>
-          <p>Psychiatrist</p>
-        </div>
-
-        <div class="psy_profile2">
-          <div>
-            <img src="images/psy1.png">
-          </div>
-          <h3>Dr. Jane Smith</h3>
-          <p>Psychiatrist</p>
-        </div>
-
-        <div class="psy_profile3">
-          <div>
-            <img src="images/psy3.png">
-          </div>
-          <h3>Dr. Emily Johnson</h3>
-          <p>Psychiatrist</p>
-        </div>
-      </div>
-        <div class="psy_button">
-          <a href="{{ route('views.psych') }}">See All Our Psychiatrist</a>
-        </div> 
+    <div class="psy_button">
+      <a href="{{ route('views.psych') }}" style="display: inline-block; padding: 12px 24px; font-size: 18px; color: white; border-radius: 8px; text-decoration: none;">
+        See All Our Psychiatrist
+      </a>
     </div>
+
 
     <div class= "news">
       <h1>Read about mental health</h1>
@@ -213,5 +201,6 @@
 
       <div class="line"></div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </body>
 </html>

@@ -95,7 +95,9 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-white border-bottom px-4">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">PSYLOGRAPHY</a>
+        <a href="{{ route('views.Homepage') }}">
+            <img class="logo" src="{{ asset('images/logo.png') }}" alt="logo" style="height: 40px;">
+        </a>
         <div class="d-flex align-items-center ms-auto">
             <a class="nav-link" href="#">Journal</a>
             <a class="nav-link" href="#">Appointment</a>
@@ -163,14 +165,14 @@
                 <div class="flex-grow-1 overflow-auto p-3 d-flex flex-column" id="chatMessages">
                     @foreach ($chats as $chat)
                         <div 
-                            class="message {{ $chat->sender_id == Auth::id() ? 'sent align-self-end' : 'received align-self-start' }} rounded px-3 py-2 mb-2"
+                            class="message {{ ($chat->sender_id == Auth::guard('user')->id() && $chat->sender_type === 'user') ? 'sent align-self-end' : 'received align-self-start' }} rounded px-3 py-2 mb-2"
                             data-chat-id="{{ $chat->id }}"
                             data-message="{{ htmlspecialchars($chat->message, ENT_QUOTES) }}"
                             oncontextmenu="showContextMenu(event, {{ $chat->id }})"
                         >
                             <span class="message-text">{{ $chat->message }}</span>
 
-                            @if($chat->sender_id == Auth::id() && $chat->sender_type == (Auth::user() instanceof \App\Models\User ? 'user' : 'psych'))
+                            @if($chat->sender_id == Auth::guard('user')->id() && $chat->sender_type === 'user')
                                 <form method="POST" action="{{ route('chat.update', $chat->id) }}" class="edit-form d-none mt-2" onsubmit="return submitEdit(event, {{ $chat->id }})">
                                     @csrf
                                     @method('PUT')
@@ -245,49 +247,80 @@
 
         document.getElementById('editOption').addEventListener('click', () => {
             if (!currentChatId) return;
-            const msgDiv = document.querySelector(`.message[data-chat-id="${currentChatId}"]`);
-            if (!msgDiv) return;
-            msgDiv.querySelector('.message-text').style.display = 'none';
-            const form = msgDiv.querySelector('.edit-form');
-            if (form) form.classList.remove('d-none');
+            const messageDiv = document.querySelector(`[data-chat-id="${currentChatId}"]`);
+            if (!messageDiv) return;
+
+            const messageText = messageDiv.querySelector('.message-text');
+            const editForm = messageDiv.querySelector('.edit-form');
+
+            messageText.style.display = 'none';
+            editForm.classList.remove('d-none');
             contextMenu.style.display = 'none';
         });
-
-        document.body.addEventListener('contextmenu', (e) => {
-            if (!e.target.closest('.message')) {
-                contextMenu.style.display = 'none';
-            }
-        });
-
-        window.showContextMenu = function(event, chatId) {
-            event.preventDefault();
-            currentChatId = chatId;
-            contextMenu.style.top = event.pageY + 'px';
-            contextMenu.style.left = event.pageX + 'px';
-            contextMenu.style.display = 'block';
-        };
-
-        window.cancelEdit = function(chatId) {
-            const msgDiv = document.querySelector(`.message[data-chat-id="${chatId}"]`);
-            if (!msgDiv) return;
-            msgDiv.querySelector('.message-text').style.display = 'inline';
-            const form = msgDiv.querySelector('.edit-form');
-            if (form) form.classList.add('d-none');
-        };
-
-        window.submitEdit = function(event, chatId) {
-            event.preventDefault();
-            const form = event.target;
-            const input = form.querySelector('input[name="message"]');
-            const newMessage = input.value.trim();
-            if (!newMessage) {
-                alert('Message cannot be empty.');
-                return false;
-            }
-            form.submit();
-            return false;
-        };
     });
+
+    function showContextMenu(event, chatId) {
+        event.preventDefault();
+        const contextMenu = document.getElementById('contextMenu');
+
+        // Check if the chat message belongs to the logged in user before showing menu
+        const messageDiv = event.currentTarget;
+        const userId = "{{ Auth::guard('user')->id() }}";
+        const senderId = messageDiv.getAttribute('data-chat-id');
+
+        // For this example, only show if the message is sent by the logged-in user
+        if (!messageDiv.classList.contains('sent')) {
+            return;
+        }
+
+        currentChatId = chatId;
+
+        contextMenu.style.top = event.pageY + 'px';
+        contextMenu.style.left = event.pageX + 'px';
+        contextMenu.style.display = 'block';
+    }
+
+    function cancelEdit(chatId) {
+        const messageDiv = document.querySelector(`[data-chat-id="${chatId}"]`);
+        const messageText = messageDiv.querySelector('.message-text');
+        const editForm = messageDiv.querySelector('.edit-form');
+
+        editForm.classList.add('d-none');
+        messageText.style.display = '';
+    }
+
+    async function submitEdit(event, chatId) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: new URLSearchParams(formData),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    const messageDiv = document.querySelector(`[data-chat-id="${chatId}"]`);
+                    messageDiv.querySelector('.message-text').textContent = formData.get('message');
+                    cancelEdit(chatId);
+                } else {
+                    alert('Failed to update message.');
+                }
+            } else {
+                alert('Failed to update message.');
+            }
+        } catch (error) {
+            alert('Failed to update message.');
+        }
+    }
 </script>
 
 </body>
