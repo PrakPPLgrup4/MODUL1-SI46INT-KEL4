@@ -88,37 +88,6 @@ class ChatController extends Controller
         return redirect()->back();
     }
 
-    public function update(Request $request, $chatId)
-    {
-        $request->validate([
-            'message' => 'required|string|max:1000',
-        ]);
-
-        $chat = Chat::findOrFail($chatId);
-
-        $authId = null;
-        $authType = null;
-
-        if (Auth::guard('user')->check()) {
-            $authId = Auth::guard('user')->id();
-            $authType = 'user';
-        } elseif (Auth::guard('psych')->check()) {
-            $authId = Auth::guard('psych')->id();
-            $authType = 'psych';
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
-
-        if ($chat->sender_id !== $authId || $chat->sender_type !== $authType) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $chat->message = $request->input('message');
-        $chat->save();
-
-        return redirect()->back();
-    }
-
     public function destroy($id)
     {
         $chat = Chat::findOrFail($id);
