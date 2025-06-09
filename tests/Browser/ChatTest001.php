@@ -14,8 +14,15 @@ class ChatTest001 extends DuskTestCase
     public function testExample(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/')
-                    ->assertSee('Laravel');
+            $browser
+                ->visit('/login')
+                ->type('username', 'farrel')
+                ->type('password', '123456')
+                ->screenshot('fields')
+                ->press('Login')
+                ->assertPathIs('/home')
+                ->clickLink('Chat')
+                ->assertPathIs('/chat');
         });
     }
 }

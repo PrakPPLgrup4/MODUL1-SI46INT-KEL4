@@ -8,14 +8,18 @@ use Tests\DuskTestCase;
 
 class PsychPro004 extends DuskTestCase
 {
-    /**
-     * A Dusk test example.
-     */
     public function testExample(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/')
-                    ->assertSee('Laravel');
+            $browser
+                ->visit('/login')
+                ->type('username', 'farrel')
+                ->type('password', '123456')
+                ->screenshot('fields')
+                ->press('Login')
+                ->assertPathIs('/home')
+                ->clickLink('Our Psychiatrist')
+                ->assertPathIs('/psych');
         });
     }
 }
