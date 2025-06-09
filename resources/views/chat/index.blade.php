@@ -122,11 +122,11 @@
             @foreach($users as $user)
                 @php $isActive = $receiverType === 'user' && $receiverId == $user->id; @endphp
                 <a href="{{ route('chat.index', ['receiverType' => 'user', 'receiverId' => $user->id]) }}"
-                   class="d-flex align-items-center text-decoration-none text-dark px-3 py-2 chat-user {{ $isActive ? 'active' : '' }}"
-                   style="{{ $isActive ? 'background-color: #FFF4DE;' : '' }}"
-                   data-name="{{ strtolower($user->fullname) }}">
+                class="d-flex align-items-center text-decoration-none text-dark px-3 py-2 chat-user {{ $isActive ? 'active' : '' }}"
+                style="{{ $isActive ? 'background-color: #FFF4DE;' : '' }}"
+                data-name="{{ strtolower($user->fullname) }}">
                     <div class="rounded-circle text-white d-flex align-items-center justify-content-center me-2"
-                         style="width: 32px; height: 32px; background-color: #5C8D00;">
+                        style="width: 32px; height: 32px; background-color: #5C8D00;">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="fw-semibold">{{ $user->fullname }}</div>
@@ -136,11 +136,11 @@
             @foreach($psychs as $psych)
                 @php $isActive = $receiverType === 'psych' && $receiverId == $psych->id; @endphp
                 <a href="{{ route('chat.index', ['receiverType' => 'psych', 'receiverId' => $psych->id]) }}"
-                   class="d-flex align-items-center text-decoration-none text-dark px-3 py-2 chat-user {{ $isActive ? 'active' : '' }}"
-                   style="{{ $isActive ? 'background-color: #FFF4DE;' : '' }}"
-                   data-name="{{ strtolower($psych->full_name) }}">
+                class="d-flex align-items-center text-decoration-none text-dark px-3 py-2 chat-user {{ $isActive ? 'active' : '' }}"
+                style="{{ $isActive ? 'background-color: #FFF4DE;' : '' }}"
+                data-name="{{ strtolower($psych->full_name) }}">
                     <div class="rounded-circle text-white d-flex align-items-center justify-content-center me-2"
-                         style="width: 32px; height: 32px; background-color: #93BF00;">
+                        style="width: 32px; height: 32px; background-color: #93BF00;">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="fw-semibold" style="color: var(--psylo-green);">{{ $psych->full_name }}</div>
@@ -203,8 +203,10 @@
 
 <div id="contextMenu">
     <ul>
-        <li id="editOption">Edit</li>
         <li id="deleteOption">Delete</li>
+        <!-- You can add edit option here if you want:
+        <li id="editOption">Edit</li>
+        -->
     </ul>
 </div>
 
@@ -214,9 +216,10 @@
 </form>
 
 <script>
+    let currentChatId = null; // Move to global scope so accessible in showContextMenu
+
     document.addEventListener('DOMContentLoaded', function () {
         const contextMenu = document.getElementById('contextMenu');
-        let currentChatId = null;
 
         document.getElementById('searchInput').addEventListener('keyup', function () {
             const filter = this.value.toLowerCase();
@@ -244,31 +247,15 @@
                 deleteForm.submit();
             }
         });
-
-        document.getElementById('editOption').addEventListener('click', () => {
-            if (!currentChatId) return;
-            const messageDiv = document.querySelector(`[data-chat-id="${currentChatId}"]`);
-            if (!messageDiv) return;
-
-            const messageText = messageDiv.querySelector('.message-text');
-            const editForm = messageDiv.querySelector('.edit-form');
-
-            messageText.style.display = 'none';
-            editForm.classList.remove('d-none');
-            contextMenu.style.display = 'none';
-        });
     });
 
     function showContextMenu(event, chatId) {
         event.preventDefault();
         const contextMenu = document.getElementById('contextMenu');
 
-        // Check if the chat message belongs to the logged in user before showing menu
         const messageDiv = event.currentTarget;
-        const userId = "{{ Auth::guard('user')->id() }}";
-        const senderId = messageDiv.getAttribute('data-chat-id');
 
-        // For this example, only show if the message is sent by the logged-in user
+        // Only show menu if message sent by logged-in user
         if (!messageDiv.classList.contains('sent')) {
             return;
         }

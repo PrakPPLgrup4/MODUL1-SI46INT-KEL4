@@ -20,7 +20,7 @@
 
           <div class="bothbutt">
             <div class="specialistBtn">
-              <a class="specialist" href="#">Find Specialist</a>
+              <a class="specialist" href="/appointment">Find Specialist</a>
             </div>
             <div class="readmoreBtn">
 
@@ -39,10 +39,10 @@
 
           <div class="bothbutt">
             <div class="specialistBtn">
-              <a class="specialist" href="#">Find Specialist</a>
+              <a class="specialist" href="/appointment">Find Specialist</a>
             </div>
             <div class="readmoreBtn">
-              <a class="readMore" href="#">Learn more</a>
+              <a class="readMore" href="/symptomcontent1">Learn more</a>
             </div>
 
           </div>  
@@ -56,10 +56,10 @@
 
           <div class="bothbutt">
             <div class="specialistBtn">
-              <a class="specialist" href="#">Find Specialist</a>
+              <a class="specialist" href="/appointment">Find Specialist</a>
             </div>
             <div class="readmoreBtn">
-              <a class="readMore" href="#">Learn more</a>
+              <a class="readMore" href="/symptomcontent1">Learn more</a>
             </div>
 
           </div>  
@@ -73,10 +73,10 @@
 
           <div class="bothbutt">
             <div class="specialistBtn">
-              <a class="specialist" href="#">Find Specialist</a>
+              <a class="specialist" href="/appointment">Find Specialist</a>
             </div>
             <div class="readmoreBtn">
-              <a class="readMore" href="#">Learn more</a>
+              <a class="readMore" href="/symptomcontent1">Learn more</a>
             </div>
 
           </div>  
@@ -90,10 +90,10 @@
 
           <div class="bothbutt">
             <div class="specialistBtn">
-              <a class="specialist" href="#">Find Specialist</a>
+              <a class="specialist" href="/appointment">Find Specialist</a>
             </div>
             <div class="readmoreBtn">
-              <a class="readMore" href="#">Learn more</a>
+              <a class="readMore" href="/symptomcontent1">Learn more</a>
             </div>
 
           </div>  
@@ -107,10 +107,10 @@
 
           <div class="bothbutt">
             <div class="specialistBtn">
-              <a class="specialist" href="#">Find Specialist</a>
+              <a class="specialist" href="/appointment">Find Specialist</a>
             </div>
             <div class="readmoreBtn">
-              <a class="readMore" href="#">Learn more</a>
+              <a class="readMore" href="/symptomcontent1">Learn more</a>
             </div>
 
           </div>  
