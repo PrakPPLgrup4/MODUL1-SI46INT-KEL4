@@ -90,36 +90,6 @@ class PsychChatController extends Controller
         return redirect()->back();
     }
 
-    public function update(Request $request, $chatId)
-    {
-        $request->validate([
-            'message' => 'required|string|max:1000',
-        ]);
-
-        $chat = Chat::findOrFail($chatId);
-
-        // Determine logged-in user guard and ID
-        if (Auth::guard('user')->check()) {
-            $authId = Auth::guard('user')->id();
-            $authType = 'user';
-        } elseif (Auth::guard('psych')->check()) {
-            $authId = Auth::guard('psych')->id();
-            $authType = 'psych';
-        } else {
-            return response()->json(['success' => false, 'message' => 'Unauthorized action.'], 403);
-        }
-
-        // Only allow update if the logged in user is sender
-        if ($chat->sender_id !== $authId || $chat->sender_type !== $authType) {
-            return response()->json(['success' => false, 'message' => 'Unauthorized action.'], 403);
-        }
-
-        $chat->message = $request->input('message');
-        $chat->save();
-
-        return response()->json(['success' => true]);
-    }
-
     public function destroy(Request $request, $chatId)
     {
         $chat = Chat::findOrFail($chatId);

@@ -202,7 +202,6 @@
 
 <div id="contextMenu">
     <ul>
-        <li id="editOption">Edit</li>
         <li id="deleteOption">Delete</li>
     </ul>
 </div>
