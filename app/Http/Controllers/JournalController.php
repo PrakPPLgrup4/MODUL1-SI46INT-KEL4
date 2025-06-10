@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\UserPoint;
 use Illuminate\Http\Request;
 use App\Models\Journal;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +46,16 @@ class JournalController extends Controller
             'date' => 'required|date',
             'journal_text' => 'required',
         ]);
+        // Tambah poin
+        $earnedPoints = 10; // misalnya bikin jurnal dapat 10 poin
+        $userPoint = UserPoint::firstOrCreate(
+            ['user_id' => Auth::id()],
+            ['points' => 0, 'total_earned' => 0, 'total_spent' => 0]
+        );
 
+        $userPoint->points += $earnedPoints;
+        $userPoint->total_earned += $earnedPoints;
+        $userPoint->save();
         Journal::create($request->all());
         return redirect()->route('views.journal')->with('success', 'Journal entry added!');
     }

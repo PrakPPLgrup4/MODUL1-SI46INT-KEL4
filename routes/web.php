@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminQuizController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PsychLoginController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\PointController;
 
 // Landing Page
 Route::get('/', function () {
@@ -90,7 +91,17 @@ Route::get('/psyci', [PsyciController::class, 'psyci'])->name('views.psyci.publi
 Route::get('/psych', [PsychController::class, 'index'])->name('views.psych');
 
 // Appointment routes
-Route::get('/appointment', [AppointmentController::class, 'index'])->name('views.appointment');
+Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+Route::get('/appointments/categories', [AppointmentController::class, 'categories'])->name('appointments.categories');
+Route::get('/appointments/categories/{category}/psychiatrists', [AppointmentController::class, 'psychiatrists'])->name('appointments.psychiatrists');
+Route::get('/appointments/slots', [AppointmentController::class, 'slots'])->name('appointments.slots');
+Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
+Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+Route::get('/appointments/{appointment}', [AppointmentController::class, 'show'])->name('appointments.show');
+Route::get('/appointments/{appointment}/edit', [AppointmentController::class, 'edit'])->name('appointments.edit');
+Route::put('/appointments/{appointment}', [AppointmentController::class, 'update'])->name('appointments.update');
+Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+Route::post('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
 
 // Rating for psychiatrists
 Route::post('/rate-psych', [PsychController::class, 'rate'])->name('psych.rate');
@@ -144,3 +155,10 @@ Route::get('/all-reviews', [ReviewController::class, 'index'])->name('review.ind
 Route::get('/all-reviews/{id}/edit', [ReviewController::class, 'edit'])->name('review.edit');
 Route::put('/all-reviews/{id}', [ReviewController::class, 'update'])->name('review.update');
 Route::delete('/all-reviews/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
+
+//point
+Route::get('/points', [PointController::class, 'index'])->name('points.index');
+Route::get('/points/history', [PointController::class, 'history'])->name('points.history');
+Route::get('/points/voucher/{voucher}', [PointController::class, 'voucherDetails'])->name('points.voucher');
+Route::get('/vouchers/{voucher}', [PointController::class, 'showVoucher'])->name('vouchers.show');
+Route::post('/vouchers/{voucher}/redeem', [PointController::class, 'redeemVoucher'])->name('vouchers.redeem');

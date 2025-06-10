@@ -16,7 +16,7 @@
       <nav>
         <ul class="nav_links">
           <li><a href="{{ route('views.journal') }}">Journal</a></li>
-          <li><a href="#">Appointment</a></li>
+          <li><a href="{{ route('appointments.index') }}">Appointment</a></li>
           <li><a href="#">Blog</a></li>
           <li><a href="{{ route('chat.index') }}">Chat</a></li>
         </ul>

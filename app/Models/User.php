@@ -23,4 +23,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    // Put this method inside the User class
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
