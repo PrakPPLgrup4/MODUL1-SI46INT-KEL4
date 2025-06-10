@@ -36,6 +36,8 @@
         <li><a href="{{ route('user.profile.edit') }}"><i class="fas fa-user-edit"></i> Edit Profile</a></li>
         <li><a href="#"><i class="fas fa-upload"></i> Upload Photo</a></li>
         <li><a href="#"><i class="fas fa-history"></i> Activity History</a></li>
+        <li><a href="{{ route('points.index') }}"><i class="fas fa-gift text-primary me-2 fs-4"></i>  Point Reward</a></li>
+
       </ul>
     </aside>
     
